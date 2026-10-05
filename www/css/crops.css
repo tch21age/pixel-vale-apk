@@ -1,0 +1,21 @@
+/* v14: แถบเมล็ดพันธุ์ + หน้าเลือกเมล็ด + ร้านค้าแบบล็อกเลเวล */
+#hotbar .slot.arr{width:calc(var(--u,40px)*.5);min-width:22px;background:rgba(10,11,16,.55)}
+#hotbar .slot.arr u{left:50%;transform:translateX(-50%);top:auto;bottom:0;font-size:8px}
+.tri{display:block;width:0;height:0;border-style:solid;border-color:transparent;margin-bottom:6px}
+.tri.l{border-width:7px 9px 7px 0;border-right-color:#ffd23f}
+.tri.r{border-width:7px 0 7px 9px;border-left-color:#ffd23f}
+.slot.arr:active .tri.l{border-right-color:#fff}.slot.arr:active .tri.r{border-left-color:#fff}
+.slot.seedsel em{position:absolute;left:1px;top:0;font-style:normal;font-size:7px;font-weight:700;color:#9be0ff;text-shadow:-1px 0 #000,1px 0 #000,0 1px #000,0 -1px #000}
+.slot.seedsel u{left:auto;right:2px;top:0}
+#pklist{overflow-y:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;max-height:calc(100dvh - 92px);padding-right:2px;-webkit-overflow-scrolling:touch;align-content:start}
+#seedpick .win{width:min(98vw,640px);gap:5px}
+#pklist .item{padding:3px 6px;gap:6px;min-height:36px}#pklist .item img{width:24px;height:24px}
+#pklist .item .nm{font-size:12px;line-height:14px}#pklist .item .nm small{font-size:10px;line-height:11px}#pklist .item .pr{font-size:11px}
+#seedpick .hint{font-size:10px}
+@media (max-width:430px){#pklist{grid-template-columns:1fr}}
+.pkrow{cursor:pointer}
+.pkrow.cur{box-shadow:inset 0 0 0 2px #ffd23f;background:#3a3420}
+.pkrow:active{background:#33384a}
+.item.lock{opacity:.5}.item.lock img{filter:grayscale(1) brightness(.6)}
+.item.lock .pr{color:#8a92a8}
+#shoplist .shh{position:sticky;top:0;z-index:1;background:#1c1f2a;padding:2px 4px;color:#ffd23f;font-size:11px;font-weight:700}

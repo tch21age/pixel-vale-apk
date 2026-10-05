@@ -1,0 +1,84 @@
+/* UI ใหม่: สัดส่วนคงที่ทุกขนาดจอ — หน่วยหลัก --u ปรับตามความสูง/กว้างของจอ */
+:root{--u:clamp(36px,min(12vh,7.2vw),68px);--g:calc(var(--u)*.12);--fs:clamp(11px,min(3vh,1.9vw),15px);--hud:clamp(58px,19vh,92px);
+ --paper:#2a2d3a;--ink2:#a9b0c4}
+html,body{-webkit-text-size-adjust:100%;overscroll-behavior:none}
+.panel{border-width:2px;border-radius:6px}
+
+/* ---------- HUD ---------- */
+#hud{gap:var(--g);align-items:flex-start;padding-top:calc(5px + env(safe-area-inset-top))}
+#hud .panel{padding:clamp(3px,.9vh,6px) clamp(5px,1vw,8px);background:rgba(24,26,36,.66)}
+#status{flex:0 1 clamp(170px,32vw,280px);min-width:0;gap:clamp(5px,1vw,9px)}
+#face{width:calc(var(--u)*.82);height:calc(var(--u)*.82);flex:none;border-width:2px}
+.row{font-size:var(--fs);line-height:1.25}
+#pname{max-width:none;flex:1;min-width:0}
+.bar{height:clamp(11px,2.8vh,16px);margin-top:clamp(1px,.4vh,3px);border-width:2px}
+.bar b{font:700 clamp(9px,2.2vh,12px)/1 'Sarabun',sans-serif;align-items:center}
+#info{display:grid;grid-template-columns:repeat(4,auto);gap:clamp(2px,.6vh,4px) clamp(3px,.6vw,6px);min-width:0;font-size:var(--fs);align-items:center}
+#info .irow{display:contents}
+#info .irow:nth-child(1){display:flex;grid-column:1/-1;justify-content:flex-end;gap:5px}
+#info .irow.dim{display:block;grid-column:span 2;font-size:calc(var(--fs) - 1px);text-align:right;color:var(--ink2)}
+#info .irow:nth-child(n+4)>button{width:100%}
+button.mini{font:700 clamp(10px,2.6vh,13px) 'Sarabun',sans-serif;padding:clamp(3px,.8vh,6px) clamp(5px,.9vw,9px);border-radius:4px;white-space:nowrap}
+#info button.mini{min-height:clamp(22px,6vh,32px)}
+#quests{left:calc(8px + env(safe-area-inset-left));top:calc(var(--hud) + env(safe-area-inset-top));width:clamp(170px,32vw,250px);font-size:calc(var(--fs) - 1px);max-height:calc(100dvh - var(--hud) - var(--u)*3.4);z-index:6}
+#toast{top:calc(var(--hud) + env(safe-area-inset-top));font-size:var(--fs);padding:6px 12px;border-radius:5px;max-width:86vw;white-space:normal;text-align:center}
+
+/* ---------- ปุ่มควบคุม ---------- */
+#controls{gap:calc(var(--g)*2);padding:0 calc(10px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));align-items:end}
+#dpad{grid-template-columns:repeat(3,var(--u));grid-template-rows:repeat(3,var(--u));opacity:.8;transform:none!important}
+.d{border-radius:calc(var(--u)*.18);border-width:2px}
+.d.up::after{border-width:0 calc(var(--u)*.2) calc(var(--u)*.28)}
+.d.down::after{border-width:calc(var(--u)*.28) calc(var(--u)*.2) 0}
+.d.left::after{border-width:calc(var(--u)*.2) calc(var(--u)*.28) calc(var(--u)*.2) 0}
+.d.right::after{border-width:calc(var(--u)*.2) 0 calc(var(--u)*.2) calc(var(--u)*.28)}
+#btns{display:grid;grid-template-columns:repeat(3,var(--u));grid-template-rows:repeat(2,var(--u));gap:var(--g);opacity:.9;transform:none!important}
+#b_fire{grid-area:1/1}#b_spin{grid-area:1/2}#b_sk3{grid-area:1/3}#b_act{grid-area:2/1}#b_attack{grid-area:2/2/3/4}
+.abtn{border-radius:calc(var(--u)*.2);border-width:2px}
+.abtn img{width:auto;height:60%;aspect-ratio:1}
+#b_attack img{height:68%}
+.abtn span{font-size:clamp(9px,calc(var(--u)*.22),13px);right:4px;bottom:2px}
+.abtn.lack img{filter:grayscale(1) brightness(.55)}
+.abtn.lack{border-color:#4a2028}
+.abtn.on{transform:scale(.94);background:#4a5166}
+#hotbar{gap:var(--g);justify-self:center;margin-bottom:2px}
+.slot{width:calc(var(--u)*.78);height:calc(var(--u)*.78);border-width:2px}
+.slot img{width:62%;height:62%}
+.slot b{font-size:clamp(10px,calc(var(--u)*.24),13px)}.slot u{font-size:clamp(8px,calc(var(--u)*.2),11px)}
+body.hidepad #dpad,body.hidepad #btns{visibility:hidden}
+
+/* ---------- หน้าต่างโมดัล ---------- */
+.modal{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
+.win{width:min(96vw,540px);max-height:calc(100dvh - 16px);border-radius:8px}
+.wt{font-size:clamp(14px,3.4vh,18px)}
+.tabs{flex-wrap:wrap}.tabs button{min-height:36px;font-size:clamp(11px,2.8vh,14px)}
+#shoplist{max-height:calc(100dvh - 150px);gap:6px}
+.item{font-size:clamp(12px,3vh,15px);padding:7px 8px;gap:9px;border-radius:5px}
+.item img{width:30px;height:30px}
+.item .nm small{font-size:clamp(10px,2.4vh,12px)}
+.item button.mini{min-height:34px;min-width:46px}
+.hint{font-size:clamp(10px,2.4vh,12px)}
+
+/* ---------- หน้าเริ่มเกม ---------- */
+#title .win{width:min(96vw,780px);display:grid;grid-template-columns:1fr;gap:12px;align-items:start;text-align:center;overflow:auto;padding:10px 12px}
+#title .tl,#title .tr{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+#title h1{font-size:clamp(26px,8vh,40px);margin:0}
+#title h2{font-size:clamp(12px,3vh,16px);margin:0}
+#title input{max-width:260px;font-size:16px}
+.gl{font-size:12px;color:#9aa3b8}
+.gsel{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:340px}
+.gcard{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 6px;color:var(--ink);cursor:pointer;background:linear-gradient(#3b4054,#2b2f3f);border:3px solid #000;box-shadow:inset 0 0 0 2px #5b6378;border-radius:6px;font-family:inherit}
+.gcard canvas{width:clamp(44px,13vh,64px);height:clamp(44px,13vh,64px);image-rendering:pixelated;background:#3b5d8a;border:2px solid #000}
+.gcard b{font-size:clamp(12px,3vh,15px);color:var(--gold)}
+.gcard small{font-size:clamp(10px,2.4vh,12px);color:#9be0ff;line-height:1.3;font-weight:500}
+.gcard.on{box-shadow:inset 0 0 0 3px var(--gold),0 0 0 2px var(--gold);background:linear-gradient(#4b4a3a,#383526)}
+#slots{max-width:420px;margin:0 auto}
+.slotcard{min-height:48px;border-radius:6px}.slotcard b{font-size:clamp(14px,3.4vh,17px)}
+#title .btnrow{width:100%}
+#title button.mini{font-size:clamp(13px,3.4vh,16px);padding:9px 16px;min-height:42px}
+.how{font-size:clamp(11px,2.8vh,14px);max-height:none;width:100%;max-width:420px}
+@media (min-aspect-ratio:13/10){#title .win{grid-template-columns:.9fr 1.1fr}#title .how{max-height:calc(100dvh - 210px)}}
+@media (max-height:420px){#title h2,#title .gl{display:none}#title .win{gap:8px}.gcard small{display:none}.how{font-size:11px;line-height:1.4}}
+
+/* จอใหญ่/แท็บเล็ต: จำกัดขนาดปุ่ม ไม่ให้บวม */
+@media (min-width:1100px) and (min-height:700px){:root{--u:64px}}
+@media (hover:hover) and (pointer:fine){#dpad,#btns{opacity:.7}}

@@ -1,0 +1,14 @@
+.panel{background:linear-gradient(#343848,#252835)}
+.bar{border-radius:4px}.bar i{box-shadow:inset 0 3px 0 rgba(255,255,255,.22)}
+#title{background:radial-gradient(ellipse at 50% 115%,#2f7a42 0,#16301f 42%,#0a0b13 100%)}
+#title::before{content:'';position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#ffe99a 1px,transparent 1.5px);background-size:90px 90px,140px 140px;background-position:0 0,40px 60px;opacity:.35;animation:tw 4s steps(2) infinite}
+@keyframes tw{50%{opacity:.15}}
+#title .win{position:relative;background:linear-gradient(#303445,#22242f);border-radius:6px}
+#title h1{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-4px)}}
+#slots{display:flex;flex-direction:column;gap:6px;width:100%}
+.slotcard{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;cursor:pointer;text-align:left;background:linear-gradient(#3b4054,#2b2f3f);border:3px solid #000;box-shadow:inset 0 0 0 2px #5b6378;transition:transform .1s}
+.slotcard:active{transform:scale(.98);box-shadow:inset 0 0 0 2px var(--gold)}
+.slotcard b{color:var(--gold);font-size:16px}.slotcard span{font-size:12px;color:#b9c0d4;font-weight:500}.slotcard small{color:#9be0ff;font-size:12px}
+#quests{position:fixed;left:calc(8px + env(safe-area-inset-left));top:calc(112px + env(safe-area-inset-top));width:230px;z-index:6;font-size:12px;max-height:52vh;overflow:auto}
+#quests.hide{display:none}.qt{color:var(--gold);font-size:14px;margin-bottom:4px}
+.q{margin-bottom:5px}.q i{display:block;height:5px;background:#0e0f14;margin:2px 0}.q u{display:block;height:100%;background:#7bd34a}.q small{color:#9aa3b8;font-weight:500}.q.ok{opacity:.55}
