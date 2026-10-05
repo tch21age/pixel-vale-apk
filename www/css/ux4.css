@@ -1,0 +1,560 @@
+/* =====================================================================
+   UX4 CSS (HUD & RPG Information Hierarchy Remaster):
+   - Pixel RPG HUD Layout: Character Status, Clean Currency, Minimap, & Menu
+   - ลบกรอบครอบเหรียญออก ให้ไอคอนเหรียญและตัวเลขแสดงผลลอยโปร่งใส สบายตา
+   - 100% Compatible with existing JS HUD, Minimap Canvas, and DOM IDs
+   ===================================================================== */
+
+:root {
+  --cream: #f4ede0;
+  --gold: #fcc828;
+  --gold2: #fff08a;
+  --goldd: #9e7410;
+  --blk: #08090d;
+  --rim: #735738;
+  --bad: #dc3444;
+  --ok: #4fa844;
+  --gb: clamp(32px, min(8.5vh, 10vw), 42px);
+  --mw: clamp(100px, min(28vh, 24vw), 160px);
+}
+
+.gi {
+  color: var(--gold);
+  --hole: var(--gold);
+  display: block;
+}
+
+.gi .h {
+  fill: var(--hole);
+}
+
+/* =====================================================================
+   1. Panels & Window Base Architecture
+   ===================================================================== */
+.panel,
+#hud .panel,
+.win.panel,
+#quests.panel {
+  background: #1c1e28;
+  border: 3px solid #08090d;
+  box-shadow:
+    inset 2px 2px 0 0 #4a546c,
+    inset -2px -2px 0 0 #101218,
+    0 4px 0 0 rgba(0, 0, 0, 0.85);
+  border-radius: 0;
+}
+
+.win.panel {
+  padding: clamp(10px, 2vh, 14px);
+  max-width: calc(100vw - 16px);
+  box-shadow:
+    inset 2px 2px 0 0 #525c74,
+    inset -2px -2px 0 0 #12141c,
+    0 8px 24px rgba(0, 0, 0, 0.95);
+}
+
+.wt {
+  color: var(--gold2);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-shadow: 1px 1px 0 #000000;
+  border-bottom: 2px solid #141620;
+  padding-bottom: 6px;
+}
+
+.wti {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wti .gi {
+  width: 1.1em;
+  height: 1.1em;
+  color: var(--gold);
+  --hole: #1c1e28;
+}
+
+button.mini {
+  background: #34394a;
+  color: var(--cream);
+  border: 2px solid #08090d;
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 #5c657e,
+    inset -1px -1px 0 0 #161822,
+    0 2px 0 0 #000000;
+  font-weight: 700;
+}
+
+button.mini:hover {
+  background: #42485c;
+  color: #ffffff;
+}
+
+button.mini:active {
+  background: #242734;
+  box-shadow:
+    inset 1px 1px 0 0 #101218,
+    inset -1px -1px 0 0 #3e4458;
+  transform: translateY(1px);
+}
+
+.tabs button.on {
+  background: #7a5a1e;
+  color: var(--gold2);
+  box-shadow:
+    inset 2px 2px 0 0 #9c762a,
+    inset -2px -2px 0 0 #3e2a08;
+  text-shadow: none;
+}
+
+.item {
+  background: #202430;
+  border: 2px solid #08090d;
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 0 #3a4256;
+}
+
+#hotbar {
+  background: rgba(26, 28, 38, 0.88);
+  box-shadow:
+    inset 1px 1px 0 0 #525c74,
+    inset -1px -1px 0 0 #101218,
+    0 4px 0 0 rgba(0, 0, 0, 0.85);
+}
+
+.slot {
+  background: #141620;
+}
+
+/* =====================================================================
+   2. Right HUD: Currency & System Buttons (#rcol & #toprow)
+   ===================================================================== */
+#hud #rcol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(3px, 1vh, 6px);
+  pointer-events: none;
+  max-width: calc(100vw - 12px);
+}
+
+#toprow {
+  display: flex;
+  gap: clamp(4px, 1vw, 8px);
+  align-items: center;
+  pointer-events: auto;
+  max-width: 100%;
+}
+
+/* แผงแสดงจำนวนเหรียญทอง (#info): ไร้กรอบ ไร้พื้นหลัง แสดงไอคอนและตัวเลขคมชัด */
+#hud #info {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: var(--gb);
+  padding: 0 clamp(2px, 0.8vw, 6px);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  flex: 0 1 auto;
+}
+
+#info .irow {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  min-width: 0;
+}
+
+#info .gi {
+  color: var(--gold);
+  --hole: var(--gold);
+  width: clamp(14px, 3.5vw, 18px);
+  height: clamp(14px, 3.5vw, 18px);
+  flex-shrink: 0;
+  filter: drop-shadow(1px 1px 0 #000000) drop-shadow(-1px -1px 0 #000000);
+}
+
+#gold {
+  color: var(--gold);
+  font-weight: 800;
+  font-size: clamp(12px, calc(var(--fs) + 0.5px), 15px);
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000,
+    1px 1px 0 #000000, 2px 2px 0 rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ปุ่มเกียร์ตั้งค่า / เควสต์ (.gearbtn) */
+#hud .gearbtn {
+  pointer-events: auto;
+  width: var(--gb);
+  height: var(--gb);
+  min-height: 0;
+  padding: clamp(5px, 1.2vh, 7px);
+  flex: none;
+  cursor: pointer;
+  background: #34394a;
+  border: 2px solid #08090d;
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 #5c657e,
+    inset -1px -1px 0 0 #161822,
+    0 2px 0 0 #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gearbtn svg {
+  width: 100%;
+  height: 100%;
+  color: var(--gold);
+  filter: drop-shadow(1px 1px 0 #000000);
+}
+
+.gearbtn:hover {
+  background: #42485c;
+}
+
+.gearbtn:active {
+  transform: translateY(1px);
+  background: #242734;
+  box-shadow:
+    inset 1px 1px 0 0 #101218,
+    inset -1px -1px 0 0 #3e4458;
+}
+
+/* =====================================================================
+   3. Minimap Window & Legend (#mapwrap & #minimap)
+   ===================================================================== */
+#hud #mapwrap {
+  pointer-events: auto;
+  cursor: pointer;
+  width: var(--mw);
+  max-width: calc(100vw - 16px);
+  padding: clamp(4px, 1vh, 6px) clamp(5px, 1vw, 8px);
+  background: rgba(22, 24, 34, 0.88);
+  border: 3px solid #08090d;
+  box-shadow:
+    inset 2px 2px 0 0 #4a546c,
+    inset -2px -2px 0 0 #101218,
+    0 4px 0 0 rgba(0, 0, 0, 0.85);
+  transition: width 0.15s steps(3);
+}
+
+#mapwrap .mh {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: clamp(9px, 2.2vh, 12px);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  font-weight: 800;
+}
+
+#zname {
+  color: var(--gold);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+#clock {
+  color: var(--cream);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+#mapwrap .mh::after {
+  content: '+';
+  color: var(--gold);
+  font-weight: 800;
+  margin-left: 2px;
+}
+
+#mapwrap.big .mh::after {
+  content: '−';
+}
+
+#hud #minimap {
+  display: block !important;
+  position: static;
+  right: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 24 / 14;
+  opacity: 1;
+  border: 2px solid #08090d;
+  box-shadow: inset 1px 1px 0 0 rgba(255, 255, 255, 0.1);
+  background: #101218;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+#mapwrap .mlg {
+  display: none;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  margin-top: 5px;
+  font-size: clamp(8px, 2vh, 10px);
+  color: var(--cream);
+  font-weight: 700;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+#mapwrap.big {
+  --mw: clamp(200px, min(64vh, 44vw), 360px);
+}
+
+#mapwrap.big .mlg {
+  display: flex;
+}
+
+.lg {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 3px;
+  border: 1px solid #000000;
+  vertical-align: -1px;
+}
+
+.lg.me { background: var(--gold); transform: rotate(45deg) scale(.8); }
+.lg.an { background: var(--cream); }
+.lg.mo { background: var(--bad); }
+.lg.sh { background: #ffd23f; }
+.lg.ex { background: var(--goldd); }
+
+/* =====================================================================
+   4. Game Settings Menu Window (#gmenu)
+   ===================================================================== */
+#gmenu .win {
+  width: min(96vw, 560px);
+  align-items: stretch;
+  text-align: left;
+  gap: 8px;
+  overflow: hidden;
+}
+
+#gmenu .wt {
+  justify-content: space-between;
+  font-size: clamp(14px, 3.2vh, 18px);
+}
+
+.gmbody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+}
+
+.gcol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+#gmenu button.mini {
+  width: 100%;
+  min-height: clamp(32px, 8vh, 42px);
+  font-size: clamp(12px, 2.8vh, 15px);
+}
+
+#gmenu #gmClose {
+  width: auto;
+  min-width: 36px;
+  min-height: 34px;
+  background: var(--bad);
+  box-shadow:
+    inset 1px 1px 0 0 #f0707a,
+    inset -1px -1px 0 0 #5e141a;
+}
+
+#gmenu #gmExit {
+  background: var(--bad);
+  box-shadow:
+    inset 1px 1px 0 0 #f0707a,
+    inset -1px -1px 0 0 #5e141a;
+}
+
+#gmenu .go {
+  background: var(--ok);
+  color: var(--cream);
+  text-shadow: 1px 1px 0 #000000;
+  font-size: clamp(13px, 3vh, 16px);
+  box-shadow:
+    inset 1px 1px 0 0 #80dc74,
+    inset -1px -1px 0 0 #20501a;
+}
+
+.sec {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold);
+  font-weight: 800;
+  font-size: clamp(11px, 2.4vh, 13px);
+  margin-top: 4px;
+}
+
+.sec::before,
+.sec::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: #343a4c;
+  box-shadow: 0 1px 0 0 #08090d;
+}
+
+.who {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #161822;
+  border: 2px solid #08090d;
+  box-shadow: inset 1px 1px 0 0 #343c50;
+  padding: 6px;
+}
+
+#gmFace {
+  width: clamp(38px, 9vh, 48px);
+  height: clamp(38px, 9vh, 48px);
+  flex: none;
+  background: #28364e;
+  border: 2px solid #08090d;
+  box-shadow: 0 0 0 1px var(--gold);
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.wi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 6px;
+  min-width: 0;
+  font-size: clamp(11px, 2.4vh, 13px);
+}
+
+.wi .nm {
+  color: var(--gold);
+  font-size: clamp(12px, 2.8vh, 15px);
+  text-shadow: 1px 1px 0 #000000;
+}
+
+.wi .lv {
+  background: var(--gold);
+  color: #08090d;
+  border: 1px solid #000000;
+  padding: 0 5px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.wi em {
+  flex-basis: 100%;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.wi small {
+  flex-basis: 100%;
+  color: #9aa3b8;
+  font-size: clamp(9px, 2vh, 11px);
+  font-weight: 600;
+}
+
+/* Toggle Rows (.tg) */
+.tg {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: clamp(32px, 8vh, 42px);
+  padding: 0 8px;
+  cursor: pointer;
+  color: var(--cream);
+  font: 700 clamp(12px, 2.8vh, 14px) 'Sarabun', sans-serif;
+  background: #181a24;
+  border: 2px solid #08090d;
+  box-shadow: inset 1px 1px 0 0 #3a4256;
+}
+
+.tg:active {
+  background: #242838;
+}
+
+.tg b {
+  min-width: 48px;
+  text-align: center;
+  padding: 2px 6px;
+  background: var(--ok);
+  color: var(--cream);
+  border: 1px solid #000000;
+  font-weight: 800;
+}
+
+.tg[data-on="0"] b {
+  background: var(--bad);
+  color: var(--cream);
+}
+
+#gmHowBox {
+  max-height: 30vh;
+  overflow: auto;
+  max-width: none;
+  font-size: clamp(10px, 2.4vh, 13px);
+  color: var(--cream);
+}
+
+/* =====================================================================
+   5. Responsive Breakpoints
+   ===================================================================== */
+@media (max-width: 540px) {
+  .gmbody {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  #toprow {
+    gap: 4px;
+  }
+  #hud #rcol {
+    gap: 4px;
+  }
+}
+
+@media (max-height: 420px) {
+  #toprow {
+    transform-origin: right top;
+  }
+  #gmenu .win {
+    max-height: 96dvh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hud #mapwrap {
+    transition: none;
+  }
+}

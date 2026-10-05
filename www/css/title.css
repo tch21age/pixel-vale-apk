@@ -1,62 +1,461 @@
-/* หน้าเริ่มเกม (กลุ่ม 6): ฉากพิกเซลตอนพลบค่ำ + โลโก้ + แผงเลือกตัวละคร/สล็อตเซฟ — โหลดหลัง ui2.css */
-#title{background:#14102e;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;overflow:hidden}
-#title::before{display:none}
-#title::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 50% 38%,transparent 52%,rgba(4,3,14,.5))}
-#titleBg{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;z-index:0}
+/* =====================================================================
+   TITLE CSS (Remastered Polish Layer):
+   - Fantasy Pixel RPG + Warm Farming Adventure Title Screen
+   - Crisp Pixel Typography, Multi-layered Text Shadows, Beveled Cards
+   - Seamless Mobile Landscape Layout (Notch Safe-Area & Small Height Support)
+   - 100% Compatible with art_title.js, Game Flow, and Slot System
+   ===================================================================== */
 
-/* โลโก้ */
-#title .logo{position:relative;z-index:1;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;pointer-events:none;text-align:center}
-#emblem{width:clamp(34px,10vh,56px);height:clamp(34px,10vh,56px);image-rendering:pixelated;animation:emb 2.4s steps(4) infinite}
-@keyframes emb{50%{transform:translateY(-3px)}}
-#title h1{position:relative;margin:0;padding:.12em .3em .1em;font-size:clamp(26px,min(9vh,8.5vw),50px);font-weight:800;line-height:1.55;letter-spacing:0;animation:none;white-space:nowrap;color:#ffd35a;-webkit-text-stroke:.16em #1a1020;paint-order:stroke fill;text-shadow:0 .08em 0 #7a3a12,0 .14em 0 #1a1020}
-#title h2{flex:0 0 auto;line-height:1.5;margin:0;position:relative;z-index:1;font-size:clamp(11px,3vh,16px);font-weight:700;color:#bfe9ff;letter-spacing:.12em;padding:1px 12px;background:rgba(16,18,26,.55);border-top:1px solid rgba(150,160,192,.55);border-bottom:1px solid rgba(150,160,192,.55);text-shadow:-1px 0 #0b0b12,1px 0 #0b0b12,0 1px #0b0b12,0 -1px #0b0b12}
-@media (max-height:420px){#title h2{display:block}}
+/* =====================================================================
+   1. Title Screen Container & Background Canvas (#title)
+   ===================================================================== */
+#title {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  background: #120e2a;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  z-index: 50;
+}
 
-/* แผงหลัก */
-#title .win{position:relative;z-index:1;flex:0 0 auto;background:rgba(18,16,34,.84);border-radius:0;max-height:calc(100dvh - 90px)}
-#title .gl{font-size:12px;color:#aab3cc;letter-spacing:.04em}
-#title input{background:rgba(10,11,16,.82);border:2px solid #04040a;border-radius:0;box-shadow:inset 0 0 0 1px rgba(150,160,192,.5);color:#fff3c4;caret-color:#ffd35a}
-#title input:focus{outline:none;box-shadow:inset 0 0 0 2px #ffd35a}
+#title::before {
+  display: none;
+}
 
-/* การ์ดตัวละคร */
-.gcard{background:rgba(30,33,46,.78);border:2px solid rgba(4,4,10,.9);border-radius:0;box-shadow:inset 0 0 0 1px rgba(150,160,192,.5);position:relative;transition:none}
-.gcard canvas{background:linear-gradient(#4a6f9c,#37577f);border:2px solid #04040a;box-shadow:inset 0 0 0 1px rgba(150,190,230,.5)}
-.gcard:active{transform:translateY(1px)}
-.gcard.on{background:rgba(70,60,20,.6);box-shadow:inset 0 0 0 2px #ffd35a,0 0 0 1px #04040a}
-.gcard.on canvas{animation:cbob .9s steps(2) infinite}
-.gcard.on::after{content:'';position:absolute;left:50%;bottom:-5px;width:9px;height:9px;background:#ffd35a;border:2px solid #04040a;transform:translateX(-50%) rotate(45deg)}
-@keyframes cbob{50%{transform:translateY(-2px)}}
+/* Vignette ขอบจอเพิ่มมิติความลึก */
+#title::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(ellipse at 50% 38%, transparent 52%, rgba(4, 3, 14, 0.58) 100%);
+}
 
-/* สล็อตเซฟ */
-.slotcard{background:rgba(30,33,46,.78);border:2px solid rgba(4,4,10,.9);border-radius:0;box-shadow:inset 0 0 0 1px rgba(150,160,192,.5);position:relative;overflow:hidden;transition:none}
-.slotcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:#ffd35a}
-.slotcard:has(.del)::before{background:#7dff9b}
-.slotcard b{color:#ffd35a}
-.slotcard:active{transform:translateY(1px);box-shadow:inset 0 0 0 2px #ffd35a}
-.slotcard.empty,.slotcard:not(:has(.del)){border-style:dashed}
-@media (hover:hover){.slotcard:hover,.gcard:hover{background:rgba(54,60,86,.85)}}
+#titleBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  z-index: 0;
+}
 
-/* วิธีเล่นแบบพับได้: ปกติซ่อน กดปุ่มแล้วสลับกับสล็อต */
-#title .how{display:none}
-#title.showhow .how{display:block}
-#title.showhow #slots{display:none}
-#howBtn{width:100%;max-width:420px}
-@media (max-height:420px){#title .win{gap:6px;padding:6px 10px}#title .tl,#title .tr{gap:6px}.slotcard{min-height:42px;padding:5px 8px}#title .how{max-height:calc(100dvh - 130px)}}
+/* =====================================================================
+   2. Logo, Emblem & Title Entrance (.logo)
+   ===================================================================== */
+#title .logo {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none;
+  text-align: center;
+  animation: titleFadeIn 1.1s ease-out forwards;
+}
 
-/* จอเตี้ย (เช่น 568x320): บีบแผงให้เหลือที่ให้โลโก้และฮีโร่ */
-@media (max-height:340px){
- #title{gap:4px}
- #title .win{padding:5px 8px;gap:6px}
- #title .tl,#title .tr{gap:4px}
- #title .gl{display:none}
- #title input{padding:3px 6px;font-size:14px;min-height:0;max-width:none}
- .gcard{padding:3px 4px;gap:1px}.gcard canvas{width:38px;height:38px}.gcard b{font-size:12px}
- .gcard.on::after{bottom:-4px;width:7px;height:7px}
- .slotcard{min-height:34px;padding:2px 8px}.slotcard b{font-size:13px}.slotcard span{font-size:10px}.slotcard small{font-size:10px}
- .slotcard .mini{padding:2px 8px;min-height:26px;font-size:11px}
- #slots{gap:4px}
- #howBtn{min-height:28px;padding:3px 10px;font-size:12px}
- #emblem{width:26px;height:26px}
- #title h1{font-size:clamp(20px,7.5vh,26px);line-height:1.5}
- #title h2{font-size:10px;padding:0 10px}
+@keyframes titleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ตราสัญลักษณ์เกมประจำไตเติล */
+#emblem {
+  width: clamp(34px, 10vh, 56px);
+  height: clamp(34px, 10vh, 56px);
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  animation: emb 2.4s steps(4) infinite;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.7));
+}
+
+@keyframes emb {
+  50% { transform: translateY(-3px); }
+}
+
+/* โลโก้ชื่อเกม: "ป่าสวนบ่าวค๊อป" (เงาพิกเซลซ้อนชั้น สระภาษาไทยอ่านง่าย) */
+#title h1 {
+  position: relative;
+  margin: 0;
+  padding: 0.1em 0.3em;
+  font-size: clamp(26px, min(9vh, 8.5vw), 50px);
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: #ffd55a;
+  text-shadow:
+    -1px -1px 0 #18101a,
+     1px -1px 0 #18101a,
+    -1px  1px 0 #18101a,
+     1px  1px 0 #18101a,
+    -2px  0px 0 #18101a,
+     2px  0px 0 #18101a,
+     0px -2px 0 #18101a,
+     0px  2px 0 #18101a,
+     0px  4px 0 #6e320e,
+     0px  6px 0 #18101a;
+}
+
+/* สโลแกนรอง: "ผจญภัย & ทำฟาร์ม" */
+#title h2 {
+  flex: 0 0 auto;
+  line-height: 1.5;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  font-size: clamp(11px, 3vh, 16px);
+  font-weight: 700;
+  color: #bfe9ff;
+  letter-spacing: 0.12em;
+  padding: 2px 14px;
+  background: rgba(16, 18, 28, 0.68);
+  border-top: 1px solid rgba(160, 180, 220, 0.5);
+  border-bottom: 1px solid rgba(160, 180, 220, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  text-shadow:
+    -1px  0px 0 #0b0b12,
+     1px  0px 0 #0b0b12,
+     0px  1px 0 #0b0b12,
+     0px -1px 0 #0b0b12;
+}
+
+@media (max-height: 420px) {
+  #title h2 { display: block; }
+}
+
+/* =====================================================================
+   3. Main Panel Window (.win)
+   ===================================================================== */
+#title .win {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  background: rgba(20, 18, 36, 0.88);
+  border: 3px solid #08090d;
+  box-shadow:
+    inset 2px 2px 0 0 #4e576e,
+    inset -2px -2px 0 0 #12141c,
+    0 8px 24px rgba(0, 0, 0, 0.95);
+  border-radius: 0;
+  max-height: calc(100dvh - 90px);
+  animation: panelFadeIn 0.8s ease-out 0.4s both;
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#title .gl {
+  font-size: 12px;
+  color: #b4bed4;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+/* กล่องกรอกชื่อตัวละคร (#nameIn) */
+#title input {
+  background: rgba(12, 13, 20, 0.88);
+  border: 2px solid #06070a;
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(160, 175, 210, 0.45),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.7);
+  color: #fff6d0;
+  caret-color: #ffd55a;
+  font-weight: 700;
+  padding: 6px 10px;
+}
+
+#title input:focus {
+  outline: none;
+  box-shadow:
+    inset 2px 2px 0 0 #fcc828,
+    inset -2px -2px 0 0 #8a6410,
+    0 0 0 1px #000000;
+}
+
+/* =====================================================================
+   4. Character Cards (.gcard)
+   ===================================================================== */
+.gcard {
+  background: rgba(30, 34, 48, 0.82);
+  border: 2px solid #08090d;
+  border-radius: 0;
+  box-shadow:
+    inset 2px 2px 0 0 #4e576e,
+    inset -2px -2px 0 0 #12141c,
+    0 2px 0 0 rgba(0, 0, 0, 0.75);
+  position: relative;
+  transition: transform 0.08s ease, background 0.08s ease;
+  cursor: pointer;
+}
+
+.gcard canvas {
+  background: linear-gradient(to bottom, #446996 0%, #2f4e72 100%);
+  border: 2px solid #08090d;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(160, 205, 245, 0.55),
+    inset -1px -1px 0 0 rgba(10, 20, 35, 0.7);
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.gcard:active {
+  transform: translateY(1px);
+}
+
+.gcard.on {
+  background: rgba(76, 64, 22, 0.75);
+  border-color: #000000;
+  box-shadow:
+    inset 2px 2px 0 0 #fff08a,
+    inset -2px -2px 0 0 #9e7410,
+    0 0 0 2px #fcc828,
+    0 3px 0 0 rgba(0, 0, 0, 0.9);
+}
+
+.gcard.on canvas {
+  animation: cbob 0.9s steps(2) infinite;
+}
+
+/* ลูกศรเพชรพิกเซลกำกับด้านล่างเมื่อเลือกตัวละคร */
+.gcard.on::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  background: #fcc828;
+  border: 2px solid #08090d;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 5;
+}
+
+@keyframes cbob {
+  50% { transform: translateY(-2px); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gcard:hover {
+    background: rgba(48, 54, 76, 0.9);
+  }
+}
+
+/* =====================================================================
+   5. Save Slots (.slotcard)
+   ===================================================================== */
+.slotcard {
+  background: rgba(28, 32, 46, 0.82);
+  border: 2px solid #08090d;
+  border-radius: 0;
+  box-shadow:
+    inset 2px 2px 0 0 #4e576e,
+    inset -2px -2px 0 0 #12141c,
+    0 2px 0 0 rgba(0, 0, 0, 0.75);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.08s ease, background 0.08s ease;
+}
+
+.slotcard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #fcc828;
+}
+
+.slotcard:has(.del)::before {
+  background: #5cd06a;
+}
+
+.slotcard b {
+  color: #fcc828;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+.slotcard:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 2px 2px 0 0 #fcc828,
+    inset -2px -2px 0 0 #12141c;
+}
+
+.slotcard.empty,
+.slotcard:not(:has(.del)) {
+  border-style: dashed;
+  border-color: #383e52;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .slotcard:hover {
+    background: rgba(48, 54, 76, 0.92);
+  }
+}
+
+/* =====================================================================
+   6. How-to-Play Help Panel (.how)
+   ===================================================================== */
+#title .how {
+  display: none;
+  background: rgba(18, 20, 30, 0.92);
+  border: 2px solid #08090d;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(160, 175, 210, 0.4),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.75);
+}
+
+#title.showhow .how {
+  display: block;
+}
+
+#title.showhow #slots {
+  display: none;
+}
+
+#howBtn {
+  width: 100%;
+  max-width: 420px;
+}
+
+@media (max-height: 420px) {
+  #title .win {
+    gap: 6px;
+    padding: 6px 10px;
+  }
+  #title .tl, #title .tr {
+    gap: 6px;
+  }
+  .slotcard {
+    min-height: 42px;
+    padding: 5px 8px;
+  }
+  #title .how {
+    max-height: calc(100dvh - 130px);
+  }
+}
+
+/* =====================================================================
+   7. Mobile Small Height Breakpoint (max-height: 340px)
+   ===================================================================== */
+@media (max-height: 340px) {
+  #title {
+    gap: 4px;
+  }
+  #title .win {
+    padding: 5px 8px;
+    gap: 6px;
+  }
+  #title .tl, #title .tr {
+    gap: 4px;
+  }
+  #title .gl {
+    display: none;
+  }
+  #title input {
+    padding: 3px 6px;
+    font-size: 14px;
+    min-height: 0;
+    max-width: none;
+  }
+  .gcard {
+    padding: 3px 4px;
+    gap: 1px;
+  }
+  .gcard canvas {
+    width: 38px;
+    height: 38px;
+  }
+  .gcard b {
+    font-size: 12px;
+  }
+  .gcard.on::after {
+    bottom: -4px;
+    width: 7px;
+    height: 7px;
+  }
+  .slotcard {
+    min-height: 34px;
+    padding: 2px 8px;
+  }
+  .slotcard b {
+    font-size: 13px;
+  }
+  .slotcard span {
+    font-size: 10px;
+  }
+  .slotcard small {
+    font-size: 10px;
+  }
+  .slotcard .mini {
+    padding: 2px 8px;
+    min-height: 26px;
+    font-size: 11px;
+  }
+  #slots {
+    gap: 4px;
+  }
+  #howBtn {
+    min-height: 28px;
+    padding: 3px 10px;
+    font-size: 12px;
+  }
+  #emblem {
+    width: 26px;
+    height: 26px;
+  }
+  #title h1 {
+    font-size: clamp(20px, 7.5vh, 26px);
+    line-height: 1.45;
+  }
+  #title h2 {
+    font-size: 10px;
+    padding: 0 10px;
+  }
+}
+
+/* =====================================================================
+   8. Reduced Motion Mode
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  #title .logo,
+  #title .win,
+  #emblem,
+  .gcard.on canvas {
+    animation: none;
+    transform: none;
+  }
 }

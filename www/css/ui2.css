@@ -1,100 +1,582 @@
-/* UI กลุ่ม 5: แผงโปร่งแสงสีเข้มขอบบาง · แถบไอเท็ม · ปุ่มเล็กกะทัดรัด · มินิแมพ (โหลดหลัง ui.css) */
-:root{--pbg:rgba(16,18,26,.74);--pln:rgba(150,160,192,.55);--pdk:rgba(4,4,10,.9);--ink:#f1e9d2;--ol:#1a1020}
-/* ฟอนต์: ใช้ Sarabun ถ้ามีในเครื่อง ไม่งั้นถอยไปฟอนต์ไทยของระบบ (ยังไม่ได้ฝังไฟล์ฟอนต์) */
-body,button,input{font-family:'Sarabun','Noto Sans Thai','Leelawadee UI','Tahoma',sans-serif}
+/* =====================================================================
+   UI2 CSS (Remastered Polish Layer): 
+   - Pixel RPG Micro-Interactions, Badges, Beveled Notches, & Polish
+   - Seamlessly overrides and refines style.css & ui.css
+   - Crisp Pixel Clip-paths, Responsive Touch Feedback, & Smooth Compositing
+   - 100% Compatible with Title, Quest, Minimap, Hotbar, and Skill Badges
+   ===================================================================== */
 
-/* แผง: มุมหยักแบบพิกเซล ขอบบาง */
-.panel{border:2px solid var(--pdk);border-radius:0;background:var(--pbg);
- box-shadow:inset 0 0 0 1px var(--pln),inset 0 -2px 0 rgba(0,0,0,.35);
- clip-path:polygon(0 3px,3px 3px,3px 0,calc(100% - 3px) 0,calc(100% - 3px) 3px,100% 3px,100% calc(100% - 3px),calc(100% - 3px) calc(100% - 3px),calc(100% - 3px) 100%,3px 100%,3px calc(100% - 3px),0 calc(100% - 3px))}
-#hud .panel{background:rgba(16,18,26,.62)}
-.win.panel{background:rgba(22,24,34,.94)}
-#face{border:2px solid var(--pdk);box-shadow:inset 0 0 0 1px rgba(150,190,230,.6);background:linear-gradient(#4a6f9c,#37577f);image-rendering:pixelated}
-.gcard canvas{background:linear-gradient(#4a6f9c,#37577f)}
+:root {
+  --pbg: rgba(18, 20, 28, 0.82);
+  --pln: rgba(160, 175, 210, 0.55);
+  --pdk: rgba(6, 7, 12, 0.95);
+  --ink: #f4ede0;
+  --ol: #181220;
 
-/* แถบ HP/MP/EXP: บาง มีขีดแบ่งและไฮไลต์บน */
-.bar{border:1px solid #000;background:#0a0b10;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.bar::after{content:'';position:absolute;inset:0;pointer-events:none;
- background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),rgba(0,0,0,.4) calc(10% - 1px) 10%),linear-gradient(rgba(255,255,255,.18),transparent 45%)}
-.bar b{text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000;font-weight:700;z-index:2}
+  /* Polished Accent Tokens */
+  --p-gold: #fcc828;
+  --p-gold-hi: #fff49c;
+  --p-gold-dim: #9e7410;
+  --p-blue: #38a4e8;
+  --p-red: #dc3444;
+  --p-green: #5cb050;
+}
 
-/* ปุ่มเล็กกะทัดรัด */
-button.mini{background:rgba(48,54,72,.9);border:1px solid #000;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(150,160,192,.5),inset 0 -2px 0 rgba(0,0,0,.35)}
-button.mini:active{background:#5a6280;box-shadow:inset 0 0 0 1px rgba(150,160,192,.5)}
-#info button.mini{min-height:clamp(20px,5.2vh,28px);padding:2px 6px;font-size:clamp(10px,2.4vh,12px)}
+body, button, input {
+  font-family: 'Sarabun', 'Noto Sans Thai', 'Leelawadee UI', 'Tahoma', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* ปุ่มบนจอ: โปร่งแสง ขอบบาง */
-.d,.abtn{background:rgba(30,33,46,.72);border:2px solid rgba(4,4,10,.85);box-shadow:inset 0 0 0 1px rgba(150,160,192,.5),inset 0 -3px 0 rgba(0,0,0,.3)}
-.d.mid{background:rgba(24,26,36,.6)}
-.d.on,.abtn.on{background:rgba(74,81,102,.9)}
-.abtn span{color:#d4daea;text-shadow:-1px 0 #000,1px 0 #000,0 1px #000,0 -1px #000}
-.abtn .cd{background:rgba(0,0,0,.62)}
+/* =====================================================================
+   1. Panels & Pixel Notch Architecture
+   ===================================================================== */
+.panel {
+  border: 2px solid var(--pdk);
+  border-radius: 0;
+  background: var(--pbg);
+  box-shadow:
+    inset 1px 1px 0 0 var(--pln),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.65),
+    0 3px 0 0 rgba(0, 0, 0, 0.75);
+  clip-path: polygon(
+    0 3px, 3px 3px, 3px 0,
+    calc(100% - 3px) 0, calc(100% - 3px) 3px, 100% 3px,
+    100% calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%,
+    3px 100%, 3px calc(100% - 3px), 0 calc(100% - 3px)
+  );
+}
 
-/* แถบไอเท็มด้านล่าง: แผงเดียว ไอคอน + ปุ่มลัด */
-#hotbar{background:var(--pbg);border:2px solid var(--pdk);box-shadow:inset 0 0 0 1px var(--pln);padding:3px;gap:3px;
- clip-path:polygon(0 3px,3px 3px,3px 0,calc(100% - 3px) 0,calc(100% - 3px) 3px,100% 3px,100% calc(100% - 3px),calc(100% - 3px) calc(100% - 3px),calc(100% - 3px) 100%,3px 100%,3px calc(100% - 3px),0 calc(100% - 3px))}
-.slot{background:rgba(10,11,16,.7);border:1px solid #000;box-shadow:inset 0 0 0 1px rgba(110,120,150,.5)}
-.slot.sel{box-shadow:inset 0 0 0 2px var(--gold);background:rgba(70,60,20,.55);transform:translateY(-2px)}
-.slot u{color:#cfd6ea;font-weight:700;text-shadow:-1px 0 #000,1px 0 #000,0 1px #000,0 -1px #000}
-.slot b{font-weight:700;text-shadow:-1px 0 #000,1px 0 #000,0 1px #000,0 -1px #000}
-/* ไอคอนไอเท็มและปุ่มสกิล: ขอบเข้มบางรอบไอคอน (DOM ล้วน ไม่อยู่ในลูปเรนเดอร์ของแคนวาส) */
-/* v11: ขอบเข้มถูก bake ลงรูปไอคอนแล้ว (art_icons.js) — ไม่ใช้ drop-shadow */
-.slot img,.abtn img,.item img{filter:none}
-.abtn.lack img{filter:grayscale(1) brightness(.55)}
+#hud .panel {
+  background: rgba(18, 20, 28, 0.72);
+}
 
-/* มินิแมพมุมขวาบน (ใต้แผงข้อมูล) */
-#minimap{position:absolute;z-index:4;right:calc(8px + env(safe-area-inset-right));top:calc(var(--hud) + 6px + env(safe-area-inset-top));
- width:clamp(84px,12.5vw,118px);aspect-ratio:24/14;height:auto;image-rendering:pixelated;display:none;pointer-events:none;opacity:.92;
- border:2px solid var(--pdk);box-shadow:0 0 0 1px var(--pln);background:rgba(16,18,26,.7)}
-#toast{background:var(--pbg);border:2px solid var(--pdk);border-radius:0;box-shadow:inset 0 0 0 1px var(--pln)}
+.win.panel {
+  background: rgba(22, 24, 34, 0.96);
+  box-shadow:
+    inset 2px 2px 0 0 var(--pln),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.85),
+    0 8px 24px rgba(0, 0, 0, 0.92);
+}
 
-/* v9: แอนิเมชันที่เปลี่ยนทุกเฟรมใช้ transform (compositor) แทน width/height → ไม่ทำ layout/repaint ไอคอนที่มี drop-shadow */
-.bar i{width:100%;transform-origin:0 50%;transform:scaleX(1);transition:transform .12s steps(6);will-change:transform}
-.abtn .cd{height:100%;transform-origin:50% 100%;transform:scaleY(0);will-change:transform}
-.abtn img{will-change:transform}
+#face {
+  border: 2px solid var(--pdk);
+  box-shadow:
+    inset 1px 1px 0 0 rgba(160, 205, 245, 0.7),
+    inset -1px -1px 0 0 rgba(10, 20, 35, 0.8),
+    0 2px 0 0 rgba(0, 0, 0, 0.8);
+  background: linear-gradient(to bottom, #4a6f9c 0%, #325078 100%);
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
 
-/* ฉายา (v13) */
-#ptitle{display:block;width:100%;background:none;border:0;padding:0;margin:0;text-align:left;cursor:pointer;
- font-size:calc(var(--fs)*.78);line-height:1.2;font-weight:700;color:var(--tc,#b8c0cc);
- text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-#ptitle[data-r="2"]{text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000,0 0 6px var(--tc)}
-#ptitle[data-r="3"],#ptitle[data-r="4"]{animation:tglow 2s ease-in-out infinite}
-#ptitle[data-r="4"]{animation-duration:1.2s}
-@keyframes tglow{0%,100%{text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000,0 0 3px var(--tc)}50%{text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000,0 0 11px var(--tc),0 0 4px #fff}}
-#titles .win{width:min(94vw,420px)}
-#titles .wt{display:flex;justify-content:space-between;align-items:center}
-#tcur .tc{text-align:center;padding:8px;border:1px solid var(--tc);background:rgba(0,0,0,.35);box-shadow:inset 0 0 14px -4px var(--tc)}
-#tcur .tc small{display:block;color:#9aa3b8;font-size:11px}
-#tcur .tc b{font-size:clamp(16px,4.4vh,22px);color:var(--tc);text-shadow:-1px 0 #000,1px 0 #000,0 1px #000,0 -1px #000,0 0 8px var(--tc)}
-#tcur .tc[data-r="4"] b,#tcur .tc[data-r="3"] b{animation:tglow 1.6s ease-in-out infinite}
-#tlist{overflow-y:auto;display:flex;flex-direction:column;gap:4px;max-height:calc(100dvh - 190px)}
-.ti{display:flex;align-items:center;gap:8px;padding:5px 8px;background:rgba(0,0,0,.28);border-left:3px solid var(--tc);font-size:13px}
-.ti .lv{flex:none;width:46px;color:#9aa3b8;font-size:11px}
-.ti .nm{flex:1;color:var(--tc);font-weight:700}
-.ti small{color:#7d859b;font-size:10px}
-.ti.cur{background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px var(--tc)}
-.ti.lock{opacity:.5;border-left-color:#555}.ti.lock .nm{color:#8a92a8}
-.stt{font-size:11px;font-weight:700}
+.gcard canvas {
+  background: linear-gradient(to bottom, #4a6f9c 0%, #325078 100%);
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
 
-/* ภารกิจต่อเนื่อง (v13) */
-#quests{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;pointer-events:auto}
-#quests,#quests *{touch-action:pan-y}
-#quests .qt small{font-size:.75em;color:#9aa3b8;font-weight:400;margin-left:4px}
-#quests .qh{margin:6px 0 3px;font-size:.82em;color:#9aa3b8;border-bottom:1px solid rgba(150,160,192,.3)}
-#quests .q{position:relative;padding:4px 5px;margin-bottom:3px;background:rgba(0,0,0,.25);border-left:3px solid #5a6280}
-#quests .q.go{cursor:pointer;border-left-color:#ffd23f}
-#quests .q.go:active{background:rgba(255,210,63,.18)}
-#quests .q.nv{background:rgba(255,210,63,.12);box-shadow:inset 0 0 0 1px #ffd23f}
-#quests .q em{position:absolute;right:5px;top:3px;font-style:normal;font-size:.75em;color:#ffd23f}
-#quests .q b{display:block;font-size:.78em;color:#7fd8ff;font-weight:600;text-align:right}
-#quests .q.nv b{color:#ffd23f}
-#quests .q.lk{opacity:.5;border-left-color:#444}
-#quests .qstop{width:100%;margin:2px 0;font-size:.85em}
-#quests{top:calc(var(--hud) + 16px + env(safe-area-inset-top));max-height:calc(100dvh - var(--hud) - 28px - env(safe-area-inset-top));width:clamp(190px,36vw,270px)}
-#quests .q span,#quests .q small{display:block}
-#quests .q span{padding-right:44px}
-#quests .q.lk span{padding-right:0}
+/* =====================================================================
+   2. Status Bars (HP / MP / EXP Segmented Insets)
+   ===================================================================== */
+.bar {
+  border: 1px solid #000000;
+  background: #090a0f;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(255, 255, 255, 0.12),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.85);
+  position: relative;
+}
 
-/* v16 ส่วน 3 — ป้ายระดับสกิลบนปุ่ม (มุมซ้ายบน แสดงเมื่อ Lv ≥ 1) */
-.abtn{position:relative}
-.abtn .slv{position:absolute;left:1px;top:1px;z-index:4;min-width:11px;padding:0 2px;height:11px;line-height:11px;text-align:center;font:700 9px/11px Sarabun,sans-serif;text-decoration:none;color:#1a1020;background:#ffd23f;border:1px solid #1a1020;pointer-events:none}
+/* ร่องขีดแบ่งสเต็ป 10% สไตล์ Pixel Metroidvania/JRPG */
+.bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), rgba(0, 0, 0, 0.45) calc(10% - 1px) 10%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.22) 0%, transparent 48%);
+  z-index: 1;
+}
+
+.bar b {
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 -1px #000000, 0 1px #000000,
+    1px 1px 0 #000000, -1px -1px 0 #000000;
+  font-weight: 700;
+  z-index: 2;
+}
+
+/* GPU Compositor Transition บนหลอดสถานะ */
+.bar i {
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(1);
+  transition: transform 0.12s steps(6);
+  will-change: transform;
+}
+
+/* =====================================================================
+   3. Buttons & Interactive Controls (Micro-feedback)
+   ===================================================================== */
+button.mini {
+  background: rgba(46, 52, 70, 0.92);
+  border: 1px solid #000000;
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(160, 175, 210, 0.55),
+    inset -1px -2px 0 0 rgba(0, 0, 0, 0.45),
+    0 2px 0 0 rgba(0, 0, 0, 0.8);
+  transition: transform 0.05s ease, background 0.05s ease;
+}
+
+button.mini:hover {
+  background: rgba(58, 66, 88, 0.95);
+  color: #ffffff;
+}
+
+button.mini:active {
+  background: #262a38;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(0, 0, 0, 0.6),
+    inset -1px -1px 0 0 rgba(160, 175, 210, 0.3);
+  transform: translateY(1px);
+}
+
+button.mini:focus-visible {
+  outline: 2px solid var(--p-gold);
+  outline-offset: 1px;
+}
+
+#info button.mini {
+  min-height: clamp(20px, 5.2vh, 28px);
+  padding: 2px 7px;
+  font-size: clamp(10px, 2.4vh, 12px);
+}
+
+/* D-Pad & Action Buttons Polish */
+.d, .abtn {
+  background: rgba(30, 33, 46, 0.82);
+  border: 2px solid rgba(5, 6, 12, 0.92);
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(160, 175, 210, 0.55),
+    inset -2px -3px 0 0 rgba(0, 0, 0, 0.45),
+    0 2px 0 0 rgba(0, 0, 0, 0.8);
+  transition: transform 0.05s ease, background 0.05s ease;
+}
+
+.d.mid {
+  background: rgba(22, 24, 34, 0.75);
+}
+
+.d:active, .d.on, .abtn:active, .abtn.on {
+  background: rgba(72, 80, 102, 0.95);
+  box-shadow:
+    inset 2px 2px 0 0 rgba(0, 0, 0, 0.55),
+    inset -1px -1px 0 0 rgba(160, 175, 210, 0.35);
+  transform: translateY(1px);
+}
+
+.abtn span {
+  color: #dce2f0;
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000,
+    1px 1px 0 #000000;
+}
+
+/* คูลดาวน์สกิล (Compositor Scaling) */
+.abtn .cd {
+  background: rgba(4, 5, 8, 0.72);
+  height: 100%;
+  transform-origin: 50% 100%;
+  transform: scaleY(0);
+  will-change: transform;
+}
+
+.abtn img {
+  will-change: transform;
+}
+
+/* ป้ายระดับสกิลบนปุ่ม (.slv) */
+.abtn {
+  position: relative;
+}
+
+.abtn .slv {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  z-index: 4;
+  min-width: 12px;
+  padding: 0 3px;
+  height: 11px;
+  line-height: 11px;
+  text-align: center;
+  font: 700 9px/11px 'Sarabun', sans-serif;
+  text-decoration: none;
+  color: #120d18;
+  background: var(--p-gold);
+  border: 1px solid #000000;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+/* =====================================================================
+   4. Hotbar & Inventory Slots
+   ===================================================================== */
+#hotbar {
+  background: var(--pbg);
+  border: 2px solid var(--pdk);
+  box-shadow:
+    inset 1px 1px 0 0 var(--pln),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.65),
+    0 4px 0 0 rgba(0, 0, 0, 0.85);
+  padding: 3px;
+  gap: 3px;
+  clip-path: polygon(
+    0 3px, 3px 3px, 3px 0,
+    calc(100% - 3px) 0, calc(100% - 3px) 3px, 100% 3px,
+    100% calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%,
+    3px 100%, 3px calc(100% - 3px), 0 calc(100% - 3px)
+  );
+}
+
+.slot {
+  background: rgba(12, 13, 18, 0.78);
+  border: 1px solid #000000;
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(120, 130, 160, 0.5),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.6);
+  transition: transform 0.08s ease, background 0.08s ease;
+}
+
+.slot:hover {
+  background: rgba(24, 27, 36, 0.9);
+}
+
+.slot.sel {
+  box-shadow:
+    inset 0 0 0 2px var(--p-gold),
+    0 0 0 1px #000000;
+  background: rgba(80, 68, 22, 0.65);
+  transform: translateY(-2px);
+}
+
+.slot u {
+  color: #dce2f0;
+  font-weight: 700;
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000;
+}
+
+.slot b {
+  font-weight: 700;
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000;
+}
+
+/* ไอคอนไอเท็มใน DOM (ปิด Filter ทึบแสงเพื่อประสิทธิภาพ) */
+.slot img, .abtn img, .item img {
+  filter: none;
+}
+
+.abtn.lack img {
+  filter: grayscale(1) brightness(0.55);
+}
+
+/* =====================================================================
+   5. Minimap & Toast Notification
+   ===================================================================== */
+#minimap {
+  position: absolute;
+  z-index: 4;
+  right: calc(8px + env(safe-area-inset-right));
+  top: calc(var(--hud) + 6px + env(safe-area-inset-top));
+  width: clamp(84px, 12.5vw, 118px);
+  aspect-ratio: 24 / 14;
+  height: auto;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  display: none;
+  pointer-events: none;
+  opacity: 0.94;
+  border: 2px solid var(--pdk);
+  box-shadow:
+    0 0 0 1px var(--pln),
+    0 4px 10px rgba(0, 0, 0, 0.85);
+  background: rgba(16, 18, 26, 0.85);
+}
+
+#toast {
+  background: var(--pbg);
+  border: 2px solid var(--pdk);
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 var(--pln),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.7),
+    0 6px 16px rgba(0, 0, 0, 0.88);
+}
+
+/* =====================================================================
+   6. Player Titles & Rarity Glows (ฉายาผู้เล่น)
+   ===================================================================== */
+#ptitle {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  cursor: pointer;
+  font-size: calc(var(--fs) * .78);
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--tc, #b8c0cc);
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 -1px #000000, 0 1px #000000;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#ptitle[data-r="2"] {
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 -1px #000000, 0 1px #000000,
+    0 0 6px var(--tc);
+}
+
+#ptitle[data-r="3"], #ptitle[data-r="4"] {
+  animation: tglow 2s ease-in-out infinite;
+}
+
+#ptitle[data-r="4"] {
+  animation-duration: 1.2s;
+}
+
+@keyframes tglow {
+  0%, 100% {
+    text-shadow:
+      -1px 0 #000000, 1px 0 #000000, 0 -1px #000000, 0 1px #000000,
+      0 0 3px var(--tc);
+  }
+  50% {
+    text-shadow:
+      -1px 0 #000000, 1px 0 #000000, 0 -1px #000000, 0 1px #000000,
+      0 0 11px var(--tc), 0 0 4px #ffffff;
+  }
+}
+
+#titles .win {
+  width: min(94vw, 420px);
+}
+
+#titles .wt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#tcur .tc {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid var(--tc);
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 14px -4px var(--tc);
+}
+
+#tcur .tc small {
+  display: block;
+  color: #9aa3b8;
+  font-size: 11px;
+}
+
+#tcur .tc b {
+  font-size: clamp(16px, 4.4vh, 22px);
+  color: var(--tc);
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000,
+    0 0 8px var(--tc);
+}
+
+#tcur .tc[data-r="4"] b, #tcur .tc[data-r="3"] b {
+  animation: tglow 1.6s ease-in-out infinite;
+}
+
+#tlist {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: calc(100dvh - 190px);
+}
+
+.ti {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.32);
+  border-left: 3px solid var(--tc);
+  font-size: 13px;
+  box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+.ti .lv {
+  flex: none;
+  width: 46px;
+  color: #9aa3b8;
+  font-size: 11px;
+}
+
+.ti .nm {
+  flex: 1;
+  color: var(--tc);
+  font-weight: 700;
+}
+
+.ti small {
+  color: #7d859b;
+  font-size: 10px;
+}
+
+.ti.cur {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px var(--tc);
+}
+
+.ti.lock {
+  opacity: 0.5;
+  border-left-color: #555555;
+}
+
+.ti.lock .nm {
+  color: #8a92a8;
+}
+
+.stt {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =====================================================================
+   7. Quest Tracker Window (#quests)
+   ===================================================================== */
+#quests {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  pointer-events: auto;
+  top: calc(var(--hud) + 16px + env(safe-area-inset-top));
+  max-height: calc(100dvh - var(--hud) - 28px - env(safe-area-inset-top));
+  width: clamp(190px, 36vw, 270px);
+}
+
+#quests, #quests * {
+  touch-action: pan-y;
+}
+
+#quests .qt small {
+  font-size: .75em;
+  color: #9aa3b8;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+#quests .qh {
+  margin: 6px 0 3px;
+  font-size: .82em;
+  color: #9aa3b8;
+  border-bottom: 1px solid rgba(160, 175, 210, 0.35);
+  padding-bottom: 2px;
+}
+
+#quests .q {
+  position: relative;
+  padding: 5px 6px;
+  margin-bottom: 3px;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #5a6280;
+  box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.04);
+}
+
+#quests .q.go {
+  cursor: pointer;
+  border-left-color: var(--p-gold);
+}
+
+#quests .q.go:active {
+  background: rgba(255, 210, 63, 0.22);
+}
+
+#quests .q.nv {
+  background: rgba(255, 210, 63, 0.14);
+  box-shadow: inset 0 0 0 1px var(--p-gold);
+}
+
+#quests .q em {
+  position: absolute;
+  right: 6px;
+  top: 4px;
+  font-style: normal;
+  font-size: .75em;
+  color: var(--p-gold);
+  font-weight: 700;
+}
+
+#quests .q b {
+  display: block;
+  font-size: .78em;
+  color: #8ce0ff;
+  font-weight: 600;
+  text-align: right;
+}
+
+#quests .q.nv b {
+  color: var(--p-gold);
+}
+
+#quests .q.lk {
+  opacity: 0.5;
+  border-left-color: #444444;
+}
+
+#quests .qstop {
+  width: 100%;
+  margin: 2px 0;
+  font-size: .85em;
+}
+
+#quests .q span, #quests .q small {
+  display: block;
+}
+
+#quests .q span {
+  padding-right: 44px;
+}
+
+#quests .q.lk span {
+  padding-right: 0;
+}
+
+/* =====================================================================
+   8. Accessibility & Reduced Motion
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  #ptitle[data-r="3"], #ptitle[data-r="4"],
+  #tcur .tc[data-r="4"] b, #tcur .tc[data-r="3"] b {
+    animation: none;
+  }
+  .bar i, .abtn .cd {
+    transition: none;
+  }
+  .slot.sel {
+    transform: none;
+  }
+}

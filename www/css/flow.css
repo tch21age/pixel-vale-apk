@@ -1,0 +1,508 @@
+/* =====================================================================
+   FLOW CSS (Remastered Transitions & Game Flow Layer):
+   - Pixel RPG Scene Changes, Curtains, Modal Entrance, & Boot Sequence
+   - High-impact yet performance-friendly transitions (opacity & transform)
+   - Zero layout shifts, no heavy blur/backdrop-filters, mobile optimized
+   - 100% Compatible with game.js, flow timers, and existing DOM IDs
+   ===================================================================== */
+
+/* =====================================================================
+   1. Boot Sequence (Retro Credit Entrance / Exit)
+   ===================================================================== */
+#boot {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #05040a;
+  touch-action: none;
+  animation: bootout 0.75s ease-in-out 2.5s forwards;
+}
+
+#boot.skip {
+  animation: bootout 0.35s ease-in-out forwards;
+}
+
+@keyframes bootout {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+#boot .bx {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 1.6vh, 10px);
+  padding: clamp(14px, 5vh, 34px) clamp(24px, 8vw, 64px);
+}
+
+#boot .by {
+  font-weight: 700;
+  font-size: clamp(11px, 3.4vh, 16px);
+  letter-spacing: 0.3em;
+  color: #9fb6d6;
+  opacity: 0;
+  animation: bfade 0.6s ease-out 0.2s forwards;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+#boot .bn {
+  font-weight: 800;
+  font-size: clamp(26px, 12vh, 52px);
+  line-height: 1.3;
+  color: #ffd55a;
+  text-shadow:
+    -1px -1px 0 #18101a,
+     1px -1px 0 #18101a,
+    -1px  1px 0 #18101a,
+     1px  1px 0 #18101a,
+     0px  3px 0 #6e320e,
+     0px  5px 0 #18101a;
+}
+
+#boot .bn span {
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  animation: btype 0.75s steps(11) 0.5s forwards;
+}
+
+#boot .bl {
+  height: 2px;
+  width: 0;
+  background: repeating-linear-gradient(90deg, #ffd55a 0 6px, #df9e2c 6px 8px);
+  box-shadow: 0 0 0 1px #04040a;
+  animation: bline 0.65s ease-out 1.2s forwards;
+}
+
+#boot .sp {
+  display: none;
+}
+
+@keyframes bfade {
+  to { opacity: 1; }
+}
+
+@keyframes btype {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes bline {
+  to { width: min(60vw, 200px); }
+}
+
+/* =====================================================================
+   2. Title Screen Entry Transition (#title)
+   ===================================================================== */
+#title:not(.hidden) {
+  animation: tfade 0.75s ease-out;
+}
+
+@keyframes tfade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* =====================================================================
+   3. Game Entry Curtains & Scene Transition (#intro)
+   ===================================================================== */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  pointer-events: auto;
+  overflow: hidden;
+  touch-action: none;
+}
+
+#intro.on {
+  display: block;
+}
+
+/* ม่านเปิดฉากบน-ล่างแบบ Classic RPG Curtain */
+#intro .cur {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #05040a;
+  z-index: 2;
+  transition: transform 0.65s ease-in-out;
+  box-shadow: 0 0 0 2px #000000;
+}
+
+#intro .cur.t {
+  top: 0;
+  height: 50.5%;
+  transform: translateY(-101%);
+}
+
+#intro .cur.b {
+  bottom: 0;
+  height: 50.5%;
+  transform: translateY(101%);
+}
+
+#intro.cover .cur.t,
+#intro.cover .cur.b {
+  transform: none;
+}
+
+#intro.open .cur {
+  transition-duration: 0.75s;
+  transition-timing-function: ease-in-out;
+}
+
+#intro.open .cur.t {
+  transform: translateY(-101%);
+}
+
+#intro.open .cur.b {
+  transform: translateY(101%);
+}
+
+#intro.open .card {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+/* การ์ดแนะนำตัวละครและข้อมูลโซน */
+#intro .card {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 1.6vh, 10px);
+  color: #fff6d0;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+}
+
+#intro.cover .card {
+  opacity: 1;
+}
+
+#intro.open.cover .card {
+  opacity: 0;
+}
+
+#intro .stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  width: 100%;
+  height: 100%;
+}
+
+/* กรอบพอร์ตเทรตพิกเซล (.ph) */
+#intro .ph {
+  position: relative;
+  width: clamp(56px, 20vh, 96px);
+  height: clamp(56px, 20vh, 96px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #34281c 0%, #1e1610 100%);
+  border: 3px solid #080706;
+  box-shadow:
+    inset 2px 2px 0 0 #d4a759,
+    inset -2px -2px 0 0 #100c08,
+    0 4px 12px rgba(0, 0, 0, 0.85);
+  animation: ibob 0.8s steps(2) infinite;
+}
+
+#intro .ph canvas {
+  width: 84%;
+  height: 84%;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+@keyframes ibob {
+  50% { transform: translateY(-2px); }
+}
+
+#intro .nm {
+  font-weight: 800;
+  font-size: clamp(18px, 6vh, 30px);
+  line-height: 1.4;
+  color: #ffd55a;
+  text-shadow:
+    -1px -1px 0 #18101a,
+     1px -1px 0 #18101a,
+    -1px  1px 0 #18101a,
+     1px  1px 0 #18101a,
+     0px  3px 0 #6e320e,
+     0px  5px 0 #18101a;
+}
+
+#intro .tt {
+  font-weight: 700;
+  font-size: clamp(11px, 3.2vh, 15px);
+  letter-spacing: 0.04em;
+  color: #fff2c2;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+#intro .zn {
+  font-weight: 700;
+  font-size: clamp(11px, 3vh, 15px);
+  color: #bfe9ff;
+  letter-spacing: 0.1em;
+  padding: 2px 16px;
+  background: rgba(16, 18, 28, 0.65);
+  border-top: 1px solid rgba(160, 180, 220, 0.55);
+  border-bottom: 1px solid rgba(160, 180, 220, 0.55);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 0 #000000;
+}
+
+/* แถบหลอดดาวน์โหลดพิกเซล (.ld) */
+#intro .ld {
+  width: clamp(140px, 40vw, 260px);
+  height: clamp(10px, 2.6vh, 14px);
+  background: #08090d;
+  border: 2px solid #04040a;
+  box-shadow:
+    inset 1px 1px 0 0 #181b24,
+    inset -1px -1px 0 0 #2e3444;
+  margin-top: clamp(2px, 1vh, 6px);
+  overflow: hidden;
+  position: relative;
+}
+
+#intro .ld i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: repeating-linear-gradient(90deg, #ffd55a 0 6px, #df9e2c 6px 8px);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+#intro.rdy .ld i {
+  animation: ildf 0.9s ease-out 0.25s forwards;
+}
+
+@keyframes ildf {
+  to { transform: scaleX(1); }
+}
+
+#intro .tip {
+  font-size: clamp(10px, 2.6vh, 13px);
+  color: #a4adc4;
+  max-width: 80vw;
+  min-height: 1.5em;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+#intro .skip {
+  position: absolute;
+  right: max(10px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 4;
+  font-size: 11px;
+  color: #7d859b;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.6s;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+#intro.cover .skip {
+  opacity: 1;
+}
+
+/* การปรากฏตัวตามลำดับของข้อความในการ์ด Intro */
+#intro .card > * {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+#intro.rdy .card > * {
+  animation: iin 0.45s ease-out forwards;
+}
+
+#intro.rdy .card > *:nth-child(1) { animation-delay: 0.06s; }
+#intro.rdy .card > *:nth-child(2) { animation-delay: 0.14s; }
+#intro.rdy .card > *:nth-child(3) { animation-delay: 0.22s; }
+#intro.rdy .card > *:nth-child(4) { animation-delay: 0.30s; }
+#intro.rdy .card > *:nth-child(5) { animation-delay: 0.38s; }
+#intro.rdy .card > *:nth-child(6) { animation-delay: 0.46s; }
+
+@keyframes iin {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =====================================================================
+   4. Modal Open/Close Micro-Transitions (.modal & .win)
+   ===================================================================== */
+.modal {
+  opacity: 1;
+  transition: opacity 0.18s ease-out;
+}
+
+.modal .win {
+  transform: translateY(0) scale(1);
+  transition: transform 0.18s ease-out;
+}
+
+/* คลาสซ่อนโมดัล (คง Display: none พร้อมระงับ Event) */
+.modal.hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =====================================================================
+   5. HUD & Quest Panels Entrance
+   ===================================================================== */
+#hud {
+  animation: hudFadeIn 0.5s ease-out 0.25s both;
+}
+
+@keyframes hudFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#quests {
+  animation: questsFadeIn 0.55s ease-out 0.35s both;
+}
+
+@keyframes questsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#menubtn {
+  font-weight: 800;
+}
+
+/* =====================================================================
+   6. Game Settings Menu Window (#gmenu)
+   ===================================================================== */
+#gmenu {
+  z-index: 30;
+}
+
+#gmenu .win {
+  width: min(88vw, 340px);
+  align-items: stretch;
+  text-align: center;
+  gap: 10px;
+}
+
+#gmenu .wt {
+  justify-content: center;
+  font-size: clamp(15px, 4vh, 19px);
+}
+
+#gmenu .who {
+  font-size: clamp(11px, 2.8vh, 14px);
+  color: #aab3cc;
+  line-height: 1.5;
+}
+
+#gmenu .who b {
+  color: var(--gold, #fcc828);
+}
+
+#gmenu button.mini {
+  width: 100%;
+  min-height: clamp(34px, 9vh, 44px);
+  font-size: clamp(13px, 3.4vh, 16px);
+}
+
+#gmenu #gmExit {
+  background: #6b341e;
+  border-color: #08090d;
+}
+
+#gmenu #gmExit:hover {
+  background: #7d3f24;
+}
+
+#gmenu .hint {
+  text-align: center;
+}
+
+/* =====================================================================
+   7. Exit / Scene Fade Out Overlay (#byeFade)
+   ===================================================================== */
+#byeFade {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: #05040a;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in-out;
+}
+
+#byeFade.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* =====================================================================
+   8. Reduced Motion Mode
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  #intro .cur,
+  #intro .card > *,
+  #intro .ph,
+  #hud,
+  #quests,
+  .modal,
+  .modal .win,
+  #title:not(.hidden) {
+    animation: none !important;
+    transition-duration: 0.01s !important;
+    transform: none !important;
+  }
+
+  #intro .card > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  #boot .by,
+  #boot .bn span {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
+  }
+
+  #boot .bl {
+    animation: none;
+    width: min(60vw, 200px);
+  }
+}

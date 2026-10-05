@@ -1,21 +1,290 @@
-/* v14: แถบเมล็ดพันธุ์ + หน้าเลือกเมล็ด + ร้านค้าแบบล็อกเลเวล */
-#hotbar .slot.arr{width:calc(var(--u,40px)*.5);min-width:22px;background:rgba(10,11,16,.55)}
-#hotbar .slot.arr u{left:50%;transform:translateX(-50%);top:auto;bottom:0;font-size:8px}
-.tri{display:block;width:0;height:0;border-style:solid;border-color:transparent;margin-bottom:6px}
-.tri.l{border-width:7px 9px 7px 0;border-right-color:#ffd23f}
-.tri.r{border-width:7px 0 7px 9px;border-left-color:#ffd23f}
-.slot.arr:active .tri.l{border-right-color:#fff}.slot.arr:active .tri.r{border-left-color:#fff}
-.slot.seedsel em{position:absolute;left:1px;top:0;font-style:normal;font-size:7px;font-weight:700;color:#9be0ff;text-shadow:-1px 0 #000,1px 0 #000,0 1px #000,0 -1px #000}
-.slot.seedsel u{left:auto;right:2px;top:0}
-#pklist{overflow-y:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;max-height:calc(100dvh - 92px);padding-right:2px;-webkit-overflow-scrolling:touch;align-content:start}
-#seedpick .win{width:min(98vw,640px);gap:5px}
-#pklist .item{padding:3px 6px;gap:6px;min-height:36px}#pklist .item img{width:24px;height:24px}
-#pklist .item .nm{font-size:12px;line-height:14px}#pklist .item .nm small{font-size:10px;line-height:11px}#pklist .item .pr{font-size:11px}
-#seedpick .hint{font-size:10px}
-@media (max-width:430px){#pklist{grid-template-columns:1fr}}
-.pkrow{cursor:pointer}
-.pkrow.cur{box-shadow:inset 0 0 0 2px #ffd23f;background:#3a3420}
-.pkrow:active{background:#33384a}
-.item.lock{opacity:.5}.item.lock img{filter:grayscale(1) brightness(.6)}
-.item.lock .pr{color:#8a92a8}
-#shoplist .shh{position:sticky;top:0;z-index:1;background:#1c1f2a;padding:2px 4px;color:#ffd23f;font-size:11px;font-weight:700}
+/* =====================================================================
+   CROPS CSS (Remastered Polish Layer):
+   - Pixel Farming RPG Theme: Seed Selector, Hotbar Arrows, & Crop Cards
+   - Warm Earth & Golden Harvest Accents
+   - Crisp Pixel Borders, Segmented Grid Cards, & Accessible States
+   - 100% Compatible with crops.js, art_crops.js, and Hotbar Systems
+   ===================================================================== */
+
+/* =====================================================================
+   1. Hotbar Seed Navigation & Arrow Slots (#hotbar .slot.arr)
+   ===================================================================== */
+#hotbar .slot.arr {
+  width: calc(var(--u, 40px) * .5);
+  min-width: 22px;
+  background: rgba(14, 16, 24, 0.78);
+  border: 3px solid #08090d;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(160, 175, 210, 0.45),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.7),
+    0 3px 0 0 rgba(0, 0, 0, 0.85);
+  transition: transform 0.06s ease, background 0.06s ease;
+}
+
+#hotbar .slot.arr:hover {
+  background: rgba(28, 32, 46, 0.9);
+}
+
+#hotbar .slot.arr:active {
+  transform: translateY(1px);
+  background: #141620;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(0, 0, 0, 0.7),
+    inset -1px -1px 0 0 rgba(160, 175, 210, 0.3);
+}
+
+#hotbar .slot.arr u {
+  left: 50%;
+  transform: translateX(-50%);
+  top: auto;
+  bottom: 1px;
+  font-size: 8px;
+  color: #a4adc4;
+  font-weight: 700;
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000;
+}
+
+/* ลูกศรสามเหลี่ยมพิกเซลสีทอง (.tri) */
+.tri {
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 1px 0 #000000);
+}
+
+.tri.l {
+  border-width: 7px 9px 7px 0;
+  border-right-color: var(--gold, #fcc828);
+}
+
+.tri.r {
+  border-width: 7px 0 7px 9px;
+  border-left-color: var(--gold, #fcc828);
+}
+
+.slot.arr:hover .tri.l {
+  border-right-color: #fff08a;
+}
+
+.slot.arr:hover .tri.r {
+  border-left-color: #fff08a;
+}
+
+.slot.arr:active .tri.l {
+  border-right-color: #ffffff;
+  transform: translateX(-1px);
+}
+
+.slot.arr:active .tri.r {
+  border-left-color: #ffffff;
+  transform: translateX(1px);
+}
+
+/* =====================================================================
+   2. Hotbar Selected Seed Slot (.slot.seedsel)
+   ===================================================================== */
+.slot.seedsel em {
+  position: absolute;
+  left: 2px;
+  top: 1px;
+  font-style: normal;
+  font-size: 8px;
+  font-weight: 700;
+  color: #a4e4ff;
+  letter-spacing: 0;
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000,
+    1px 1px 0 #000000;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.slot.seedsel u {
+  left: auto;
+  right: 2px;
+  top: 0;
+  color: #dce2f0;
+  font-weight: 700;
+}
+
+/* =====================================================================
+   3. Seed Picker Dialog Window (#seedpick & #pklist)
+   ===================================================================== */
+#seedpick .win {
+  width: min(98vw, 640px);
+  gap: 6px;
+  background: rgba(22, 24, 34, 0.96);
+  border: 4px solid #08090d;
+  box-shadow:
+    inset 2px 2px 0 0 #525c74,
+    inset -2px -2px 0 0 #12141c,
+    0 8px 24px rgba(0, 0, 0, 0.95);
+  padding: 8px 10px;
+}
+
+#seedpick .hint {
+  font-size: 11px;
+  color: #9aa3b8;
+  line-height: 14px;
+}
+
+#pklist {
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  max-height: calc(100dvh - 96px);
+  padding-right: 3px;
+  -webkit-overflow-scrolling: touch;
+  align-content: start;
+}
+
+#pklist .item {
+  padding: 4px 7px;
+  gap: 7px;
+  min-height: 38px;
+  background: rgba(30, 34, 48, 0.85);
+  border: 2px solid #08090d;
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 #4e576e,
+    inset -1px -1px 0 0 #12141c,
+    0 2px 0 0 rgba(0, 0, 0, 0.7);
+  transition: transform 0.06s ease, background 0.06s ease;
+}
+
+#pklist .item img {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+#pklist .item .nm {
+  font-size: 13px;
+  line-height: 15px;
+  color: #f4ede0;
+}
+
+#pklist .item .nm small {
+  display: block;
+  font-size: 11px;
+  line-height: 13px;
+  color: #9aa3b8;
+  margin-top: 1px;
+}
+
+#pklist .item .pr {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold, #fcc828);
+  text-shadow: 1px 1px 0 #000000;
+}
+
+/* แถวการเลือกเมล็ด (.pkrow) */
+.pkrow {
+  cursor: pointer;
+}
+
+.pkrow:hover {
+  background: rgba(46, 52, 72, 0.95);
+  border-color: #000000;
+}
+
+.pkrow.cur {
+  background: rgba(76, 64, 22, 0.78);
+  border-color: #000000;
+  box-shadow:
+    inset 2px 2px 0 0 #fff08a,
+    inset -2px -2px 0 0 #9e7410,
+    0 0 0 2px var(--gold, #fcc828);
+}
+
+.pkrow.cur .nm {
+  color: #fff6d0;
+  font-weight: 700;
+}
+
+.pkrow:active {
+  background: #242838;
+  transform: translateY(1px);
+}
+
+/* รายการที่ล็อกเลเวล (.item.lock) */
+.item.lock {
+  opacity: 0.52;
+  background: rgba(20, 22, 30, 0.6);
+  border-color: #08090d;
+}
+
+.item.lock img {
+  filter: grayscale(1) brightness(0.6);
+}
+
+.item.lock .pr {
+  color: #7d859b;
+}
+
+.item.lock .nm {
+  color: #8a92a8;
+}
+
+/* =====================================================================
+   4. Shop Sticky Category Headers (#shoplist .shh)
+   ===================================================================== */
+#shoplist .shh {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #181b26;
+  border-bottom: 2px solid #08090d;
+  box-shadow:
+    inset 1px 1px 0 0 #3a4256,
+    0 2px 4px rgba(0, 0, 0, 0.6);
+  padding: 3px 6px;
+  color: var(--gold, #fcc828);
+  font-size: 12px;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 #000000;
+  letter-spacing: 0.04em;
+}
+
+/* =====================================================================
+   5. Responsive & Accessibility Breakpoints
+   ===================================================================== */
+@media (max-width: 430px) {
+  #pklist {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-height: 420px) {
+  #seedpick .win {
+    gap: 4px;
+    padding: 6px 8px;
+  }
+  #pklist {
+    max-height: calc(100dvh - 84px);
+    gap: 4px;
+  }
+  #pklist .item {
+    min-height: 34px;
+    padding: 3px 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #pklist .item,
+  #hotbar .slot.arr,
+  .slot.arr:active .tri.l,
+  .slot.arr:active .tri.r {
+    transition: none;
+    transform: none;
+  }
+}

@@ -1,0 +1,344 @@
+/* =====================================================================
+   UX3 CSS (Gameplay Interaction & Mobile Touch Controls Remaster):
+   - Pixel RPG Gamepad Experience: D-Pad, Combat Buttons, Interaction Prompts
+   - Tactile Micro-feedback: 1.5px Button Press, Segmented Touch Hub
+   - Skill Readiness, Cooldown Overlays, & Distinct Action Categories
+   - Mobile Landscape Optimized: Notch Safe-Area, High-contrast Visibility
+   - 100% Compatible with existing JS inputs, Hotbar, and Canvas 384x224
+   ===================================================================== */
+
+:root {
+  /* Controls Theme Tokens */
+  --ctrl-bg: #1c1f2a;
+  --ctrl-border: #08090d;
+  --ctrl-bevel-hi: #525c74;
+  --ctrl-bevel-dk: #101218;
+  --ctrl-gold: #fcc828;
+  --ctrl-gold-hi: #fff08a;
+  --ctrl-atk: #dc3444;
+  --ctrl-atk-hi: #ff7886;
+  --ctrl-act: #4fa844;
+  --ctrl-act-hi: #8ee06a;
+  --ctrl-sk: #d4a759;
+  --ctrl-sk-hi: #ffd88a;
+  --ctrl-lack: #44161c;
+}
+
+/* =====================================================================
+   1. Master Controls Container (#controls)
+   ===================================================================== */
+#controls {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* =====================================================================
+   2. Pixel Game D-Pad (#dpad)
+   ===================================================================== */
+#dpad {
+  touch-action: manipulation;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.85));
+}
+
+.d {
+  background: var(--ctrl-bg);
+  border: 2px solid var(--ctrl-border);
+  border-radius: 0;
+  box-shadow:
+    inset 2px 2px 0 0 var(--ctrl-bevel-hi),
+    inset -2px -2px 0 0 var(--ctrl-bevel-dk);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.05s steps(2), background 0.05s steps(2);
+}
+
+/* แกนหมุนกึ่งกลาง D-Pad (.mid) */
+.d.mid {
+  background: #141620;
+  box-shadow:
+    inset 1px 1px 0 0 #0a0b10,
+    inset -1px -1px 0 0 #282e3c;
+  cursor: default;
+  pointer-events: none;
+}
+
+.d.mid::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  background: #0c0d12;
+  border: 1px solid #343b4c;
+  transform: translate(-50%, -50%);
+}
+
+/* ลูกศรทิศทางสไตล์เรโทร */
+.d::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: solid transparent;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 1px 0 #000000);
+}
+
+.d.up::after    { border-width: 0 calc(var(--u) * .2) calc(var(--u) * .28); border-bottom-color: #b0bacd; }
+.d.down::after  { border-width: calc(var(--u) * .28) calc(var(--u) * .2) 0; border-top-color: #b0bacd; }
+.d.left::after  { border-width: calc(var(--u) * .2) calc(var(--u) * .28) calc(var(--u) * .2) 0; border-right-color: #b0bacd; }
+.d.right::after { border-width: calc(var(--u) * .2) 0 calc(var(--u) * .2) calc(var(--u) * .28); border-left-color: #b0bacd; }
+
+/* D-Pad Pressed & Active State */
+.d:active, .d.on {
+  background: #343a4e;
+  box-shadow:
+    inset 2px 2px 0 0 #0a0b10,
+    inset -2px -2px 0 0 var(--ctrl-bevel-hi),
+    0 0 0 1px var(--ctrl-gold);
+  transform: translateY(1.5px);
+}
+
+.d:active::after, .d.on::after {
+  filter: brightness(1.35) drop-shadow(0 0 1px #ffffff);
+}
+
+/* =====================================================================
+   3. Action & Skill Buttons (#btns & .abtn)
+   ===================================================================== */
+#btns {
+  touch-action: manipulation;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.85));
+}
+
+.abtn {
+  border-radius: 0;
+  border: 2px solid var(--ctrl-border);
+  background: var(--ctrl-bg);
+  box-shadow:
+    inset 2px 2px 0 0 var(--ctrl-bevel-hi),
+    inset -3px -3px 0 0 var(--ctrl-bevel-dk),
+    0 3px 0 0 #000000;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.05s steps(2);
+}
+
+.abtn img {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+}
+
+/* 1. ปุ่มโจมตีหลัก (#b_attack) - แดงชาดเด่นชัด */
+#b_attack {
+  background: linear-gradient(to bottom, #9e2a34 0%, #681820 100%);
+  box-shadow:
+    inset 2px 2px 0 0 var(--ctrl-atk-hi),
+    inset -3px -3px 0 0 #3a0a10,
+    0 3px 0 0 #000000;
+}
+
+#b_attack:active, #b_attack.on {
+  background: #501218;
+  box-shadow:
+    inset 2px 2px 0 0 #28060a,
+    inset -2px -2px 0 0 var(--ctrl-atk-hi),
+    0 0 0 1px var(--ctrl-gold);
+  transform: translateY(1.5px);
+}
+
+/* 2. ปุ่มปฏิสัมพันธ์ (#b_act) - เขียวมรกตธรรมชาติ */
+#b_act {
+  background: linear-gradient(to bottom, #387834 0%, #204820 100%);
+  box-shadow:
+    inset 2px 2px 0 0 var(--ctrl-act-hi),
+    inset -3px -3px 0 0 #102410,
+    0 3px 0 0 #000000;
+}
+
+#b_act:active, #b_act.on {
+  background: #183818;
+  box-shadow:
+    inset 2px 2px 0 0 #0a180a,
+    inset -2px -2px 0 0 var(--ctrl-act-hi),
+    0 0 0 1px var(--ctrl-gold);
+  transform: translateY(1.5px);
+}
+
+/* 3. ปุ่มสกิล (#b_fire, #b_spin, #b_sk3) - ทองอำพันโบราณ */
+#b_fire, #b_spin, #b_sk3 {
+  background: linear-gradient(to bottom, #8e6828 0%, #5c4014 100%);
+  box-shadow:
+    inset 2px 2px 0 0 var(--ctrl-sk-hi),
+    inset -3px -3px 0 0 #322008,
+    0 3px 0 0 #000000;
+}
+
+#b_fire:active, #b_fire.on,
+#b_spin:active, #b_spin.on,
+#b_sk3:active, #b_sk3.on {
+  background: #46300c;
+  box-shadow:
+    inset 2px 2px 0 0 #1e1204,
+    inset -2px -2px 0 0 var(--ctrl-sk-hi),
+    0 0 0 1px var(--ctrl-gold);
+  transform: translateY(1.5px);
+}
+
+/* เมื่อ MP ไม่พอใช้สกิล (.abtn.lack) */
+.abtn.lack {
+  background: #1c181a !important;
+  border-color: #3e1218;
+  box-shadow:
+    inset 2px 2px 0 0 #2e2024,
+    inset -2px -2px 0 0 #0c080a,
+    0 2px 0 0 #000000 !important;
+}
+
+.abtn.lack img {
+  filter: grayscale(1) brightness(0.5);
+  opacity: 0.65;
+}
+
+/* ป้ายคีย์แคปพิกเซล (.abtn span) */
+.abtn span {
+  font: 700 10px/10px 'Sarabun', monospace;
+  color: #f4ede0;
+  background: rgba(8, 9, 12, 0.85);
+  border: 1px solid #000000;
+  padding: 1px 3px;
+  text-shadow: 1px 1px 0 #000000;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.7);
+}
+
+/* คูลดาวน์สกิล (.cd) */
+.abtn .cd {
+  background: rgba(4, 5, 8, 0.76);
+  box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+/* เมื่อคูลดาวน์เสร็จพร้อมใช้งาน (.abtn.ready) */
+.abtn.ready {
+  animation: rdyPulse 0.4s steps(4);
+}
+
+@keyframes rdyPulse {
+  0%   { box-shadow: 0 0 0 0 var(--ctrl-gold-hi); }
+  100% { box-shadow: 0 0 0 8px transparent; }
+}
+
+/* ป้ายเลเวลสกิลบนปุ่ม (.slv) */
+.abtn .slv {
+  border-radius: 0;
+  box-shadow: 0 1px 0 0 #000000;
+}
+
+/* =====================================================================
+   4. Hotbar Inventory Bar (#hotbar & .slot)
+   ==================================================================== */
+#hotbar {
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.85));
+}
+
+.slot {
+  border-radius: 0;
+  border: 2px solid #08090d;
+  background: #141722;
+  box-shadow:
+    inset 1px 1px 0 0 #3a445a,
+    inset -1px -1px 0 0 #0c0e14;
+  transition: transform 0.08s steps(2), background 0.08s steps(2);
+}
+
+.slot:hover {
+  background: #202434;
+}
+
+.slot:active {
+  transform: translateY(1px);
+}
+
+/* สล็อตไอเท็มที่เลือกอยู่ (.slot.sel) */
+.slot.sel {
+  background: #342e18;
+  border-color: #000000;
+  box-shadow:
+    inset 2px 2px 0 0 var(--ctrl-gold-hi),
+    inset -2px -2px 0 0 #8a6410,
+    0 0 0 2px var(--ctrl-gold),
+    0 4px 0 0 rgba(0, 0, 0, 0.95);
+  transform: translateY(-2px);
+}
+
+.slot b {
+  font: 700 12px/12px 'Sarabun', sans-serif;
+  color: #ffffff;
+  text-shadow:
+    -1px 0 #000000, 1px 0 #000000, 0 1px #000000, 0 -1px #000000,
+    1px 1px 0 #000000;
+}
+
+.slot u {
+  font: 700 9px/9px 'Sarabun', monospace;
+  color: #9aa3b8;
+  background: rgba(8, 9, 12, 0.75);
+  padding: 0 2px;
+}
+
+/* =====================================================================
+   5. Low HP Vignette Warning (body.lowhp & #vig)
+   ==================================================================== */
+#vig {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    inset 0 0 0 6px rgba(180, 40, 48, 0.65),
+    inset 0 0 0 14px rgba(180, 40, 48, 0.35),
+    inset 0 0 0 24px rgba(180, 40, 48, 0.18);
+}
+
+body.lowhp #vig {
+  opacity: 1;
+  animation: vigPulse 0.8s steps(2) infinite;
+}
+
+@keyframes vigPulse {
+  50% { opacity: 0.32; }
+}
+
+body.lowhp .bar.hp {
+  animation: lowhpShake 0.6s steps(2) infinite;
+}
+
+@keyframes lowhpShake {
+  50% { box-shadow: 0 0 0 2px #dc3444; }
+}
+
+/* =====================================================================
+   6. Touch Accessibility & Reduced Motion
+   ==================================================================== */
+button:focus-visible, input:focus-visible, .slot:focus-visible {
+  outline: 2px solid var(--ctrl-gold);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d, .abtn, .slot {
+    transition: none !important;
+  }
+  .d:active, .d.on, .abtn:active, .abtn.on, .slot.sel {
+    transform: none !important;
+  }
+  body.lowhp #vig, body.lowhp .bar.hp, .abtn.ready {
+    animation: none !important;
+  }
+}
