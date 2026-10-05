@@ -216,9 +216,15 @@ document.querySelectorAll('[data-tap]').forEach(b=>b.addEventListener('pointerdo
   dp.addEventListener('pointermove',e=>{if(e.buttons||e.pressure>0)setDir(e)});
   ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>dp.addEventListener(ev,clear));
 })();
-$('padbtn').addEventListener('click',()=>document.body.classList.toggle('hidepad'));
+function syncSet(){const m=$('mutebtn'),p=$('padbtn'),hp=document.body.classList.contains('hidepad');
+  m.dataset.on=muted?0:1;m.querySelector('b').textContent=muted?'ปิด':'เปิด';
+  p.dataset.on=hp?0:1;p.querySelector('b').textContent=hp?'ซ่อน':'แสดง';
+  try{localStorage.setItem('pvmute',muted?1:0);localStorage.setItem('pvpad',hp?0:1)}catch(e){}}
+window.syncSet=syncSet;
+$('padbtn').addEventListener('click',()=>{document.body.classList.toggle('hidepad');syncSet()});
 $('mutebtn').addEventListener('click',toggleMute);
-function toggleMute(){muted=!muted;$('mutebtn').style.opacity=muted?.45:1;toast(muted?'ปิดเสียง':'เปิดเสียง')}
+function toggleMute(){muted=!muted;syncSet();toast(muted?'ปิดเสียง':'เปิดเสียง')}
+setTimeout(()=>{try{if(localStorage.getItem('pvmute')==='1')muted=true;if(localStorage.getItem('pvpad')==='0')document.body.classList.add('hidepad')}catch(e){}syncSet()},0);
 
 /* =====================================================================
    HELPERS: toast, floating text, particles

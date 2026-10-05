@@ -15,11 +15,7 @@ function qDraw(){if(qp.classList.contains('hide'))return;
     return `<div class="q${d?' ok':''}"><span>${d?'✔ ':''}${q.t}</span><i><u style="width:${p/q.n*100}%"></u></i><small>${p}/${q.n} · รางวัล ${q.g}G</small></div>`}).join('')}
 function qCheck(){for(const q of QUESTS){if(X.done[q.id]||prog(q)<q.n)continue;X.done[q.id]=1;P.gold+=q.g;if(q.x)gainExp(q.x);
   ftext(P.x,P.y-50,'ภารกิจสำเร็จ!','#ffd23f',2,1.6);toast('ภารกิจสำเร็จ: '+q.t+'  +'+q.g+'G',2800);SFX.lvl();save()}qDraw()}
-const row=document.createElement('div');row.className='irow';
-row.innerHTML='<button class="mini" id="savebtn">บันทึก</button><button class="mini" id="qbtn">ภารกิจ</button>';
-document.getElementById('info').appendChild(row);
-document.getElementById('savebtn').onclick=()=>{save();toast('บันทึกตัวละครแล้ว')};
-document.getElementById('qbtn').onclick=()=>{qp.classList.toggle('hide');qDraw()};
+document.getElementById('gmQuest').onclick=()=>{qp.classList.toggle('hide');qDraw()};
 /* สถิติ */
 const _kill=killMonster;killMonster=function(m){_kill(m);X.stats[m.type]=(X.stats[m.type]||0)+1};
 const _plot=plotAct;plotAct=function(pl,x,y){const h=pl.state===2&&pl.stage>=3;_plot(pl,x,y);if(h)X.stats.harvest=(X.stats.harvest||0)+1};
