@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#14151a">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>ป่าสวนบ่าวค๊อป — RPG และฟาร์ม</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/extra.css">
+<link rel="stylesheet" href="css/ui.css">
+<link rel="stylesheet" href="css/ui2.css">
+<link rel="stylesheet" href="css/title.css">
+<link rel="stylesheet" href="css/crops.css">
+</head>
+<body>
+<div id="app">
+  <div id="hud">
+    <div class="panel" id="status">
+      <canvas id="face" width="16" height="16"></canvas>
+      <div class="st">
+        <div class="row"><span id="pname">ฮีโร่</span><span id="plv">Lv.1</span></div>
+        <div class="bar hp" id="hpbar"><i id="hpf"></i><b><span>HP</span><span id="hpt"></span></b></div>
+        <div class="bar mp" id="mpbar"><i id="mpf"></i><b><span>MP</span><span id="mpt"></span></b></div>
+        <div class="bar xp"><i id="xpf"></i><b><span>EXP</span><span id="xpt"></span></b></div>
+      </div>
+    </div>
+    <div class="panel" id="info">
+      <div class="irow"><img id="coinimg" class="px" width="14" height="14" alt=""><span id="gold">0</span></div>
+      <div class="irow dim"><span id="zname">ฟาร์ม</span></div>
+      <div class="irow dim"><span id="clock">วัน 1 08:00</span></div>
+      <div class="irow"><button class="mini" id="padbtn">ปุ่มจอย</button><button class="mini" id="mutebtn">เสียง</button></div>
+    </div>
+  </div>
+
+  <canvas id="minimap" width="96" height="56"></canvas>
+  <div id="stage"><canvas id="game" width="384" height="224"></canvas><div id="toast"></div></div>
+
+  <div id="controls">
+    <div id="dpad"><div class="d up"></div><div class="d left"></div><div class="d mid"></div><div class="d right"></div><div class="d down"></div></div>
+    <div id="hotbar"></div>
+    <div id="btns">
+      <button class="abtn" id="b_fire" data-hold="fire"><img class="px" alt=""><i class="cd"></i><span>K</span></button>
+      <button class="abtn" id="b_spin" data-hold="spin"><img class="px" alt=""><i class="cd"></i><span>L</span></button>
+      <button class="abtn" id="b_sk3" data-hold="sk3"><img class="px" alt=""><i class="cd"></i><span>I</span></button>
+      <button class="abtn" id="b_act" data-tap="act"><img class="px" alt=""><span>E</span></button>
+      <button class="abtn" id="b_attack" data-hold="attack"><img class="px" alt=""><i class="cd"></i><span>J</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="rot"><div class="th">กรุณาหมุนจอเป็นแนวนอน<br>เพื่อเล่นเกม</div></div>
+<div id="shop" class="modal hidden">
+  <div class="win panel">
+    <div class="wt"><span>ร้านค้าป่าสวนบ่าวค๊อป</span><span id="shopgold"></span><button class="mini" id="shopclose">X</button></div>
+    <div class="tabs"><button class="mini on" data-tab="buy">ซื้อ</button><button class="mini" data-tab="sell">ขาย</button></div>
+    <div id="shoplist"></div>
+    <div class="hint">กด ESC / E หรือแตะพื้นที่ว่างเพื่อปิด</div>
+  </div>
+</div>
+
+<div id="title" class="modal">
+  <canvas id="titleBg"></canvas>
+  <div class="logo">
+    <canvas id="emblem" width="32" height="32"></canvas>
+    <h1>ป่าสวนบ่าวค๊อป</h1>
+    <h2>ผจญภัย &amp; ทำฟาร์ม</h2>
+  </div>
+  <div class="win panel">
+    <div class="tl">
+      <input id="nameIn" maxlength="10" value="ฮีโร่" autocomplete="off" spellcheck="false">
+      <div class="th gl">เลือกตัวละคร</div>
+      <div class="gsel">
+        <button class="gcard on" data-g="m"><canvas class="px" width="16" height="16"></canvas><b>ชาย · นักรบ</b><small>ลูกไฟ · ฟันหมุน · พุ่งฟัน</small></button>
+        <button class="gcard" data-g="f"><canvas class="px" width="16" height="16"></canvas><b>หญิง · จอมเวท</b><small>ลูกน้ำแข็ง · ฟื้นฟู · สายฟ้า</small></button>
+      </div>
+    </div>
+    <div class="tr">
+      <div class="btnrow"><button class="mini" id="startBtn">เริ่มเกมใหม่</button><button class="mini" id="contBtn" style="display:none">เล่นต่อ</button></div>
+      <button class="mini" id="howBtn" type="button">วิธีเล่น</button>
+      <div class="how th">
+        <b>วิธีเล่น</b><br>
+        • เดิน: <kbd>W A S D</kbd> / ลูกศร (หรือจอยบนจอ) · โจมตี <kbd>J</kbd>/<kbd>Space</kbd><br>
+        • สกิล 3 อย่างตามตัวละคร: <kbd>K</kbd> <kbd>L</kbd> <kbd>I</kbd> (ใช้ MP)<br>
+        • <b>ฟาร์ม:</b> หันหน้าเข้าแปลงดินแล้วกด <kbd>E</kbd> → ไถ → ปลูก → รดน้ำ → เก็บเกี่ยว<br>
+        • <b>ตกปลา:</b> ยืนหันหน้าเข้าบ่อน้ำ กด <kbd>E</kbd> ทิ้งเบ็ด เมื่อเห็น ! รีบกด <kbd>E</kbd><br>
+        • <b>สัตว์:</b> ซื้อไก่/วัว/หมาที่ร้านค้า · เก็บไข่/นมด้วย <kbd>E</kbd><br>
+        • <b>ตีบวกดาบ</b> ที่ร้านค้า ใช้วัตถุดิบจากมอนสเตอร์<br>
+        • ขวาสุดของฟาร์ม → <b>ป่าล่าสัตว์</b> → ขวาสุดอีกครั้ง → <b>ถ้ำคริสตัล</b><br>
+        • <kbd>1</kbd>-<kbd>3</kbd> เลือกเมล็ด · <kbd>4</kbd>/<kbd>5</kbd> ยา · <kbd>P</kbd> หยุด · <kbd>M</kbd> เสียง
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/gfx.js"></script>
+<script src="js/game.js"></script>
+<script src="js/save.js"></script>
+<script src="js/features.js"></script>
+<script src="js/titles.js"></script>
+<script src="js/quests.js"></script>
+<script src="js/world.js"></script>
+<script src="js/scaling.js"></script>
+<script src="js/crops.js"></script>
+<script src="js/art_hero.js"></script>
+<script src="js/art_mon.js"></script>
+<script src="js/art_env.js"></script>
+<script src="js/art_light.js"></script>
+<script src="js/art_fx.js"></script>
+<script src="js/art_farm.js"></script>
+<script src="js/art_icons.js"></script>
+<script src="js/art_crops.js"></script>
+<script src="js/art_ui.js"></script>
+<script src="js/art_sword.js"></script>
+<script src="js/art_skill.js"></script>
+<script src="js/art_warm.js"></script>
+<script src="js/auto_q.js"></script>
+<script src="js/art_title.js"></script>
+<script src="js/music.js"></script>
+</body>
+</html>
