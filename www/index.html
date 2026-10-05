@@ -12,8 +12,18 @@
 <link rel="stylesheet" href="css/ui2.css">
 <link rel="stylesheet" href="css/title.css">
 <link rel="stylesheet" href="css/crops.css">
+<link rel="stylesheet" href="css/flow.css">
+<link rel="stylesheet" href="css/ux3.css">
+<link rel="stylesheet" href="css/ux4.css">
+<link rel="stylesheet" href="css/ux5.css">
 </head>
 <body>
+<div id="boot" class="th"><div class="bx">
+  <i class="sp s1"></i><i class="sp s2"></i><i class="sp s3"></i><i class="sp s4"></i>
+  <div class="by">สร้างโดย</div>
+  <div class="bn"><span>t. rakon_17</span></div>
+  <div class="bl"></div>
+</div></div>
 <div id="app">
   <div id="hud">
     <div class="panel" id="status">
@@ -25,15 +35,20 @@
         <div class="bar xp"><i id="xpf"></i><b><span>EXP</span><span id="xpt"></span></b></div>
       </div>
     </div>
-    <div class="panel" id="info">
-      <div class="irow"><img id="coinimg" class="px" width="14" height="14" alt=""><span id="gold">0</span></div>
-      <div class="irow dim"><span id="zname">ฟาร์ม</span></div>
-      <div class="irow dim"><span id="clock">วัน 1 08:00</span></div>
-      <div class="irow"><button class="mini" id="padbtn">ปุ่มจอย</button><button class="mini" id="mutebtn">เสียง</button></div>
+    <div id="rcol">
+      <div id="toprow">
+        <div class="panel" id="info"><div class="irow"><img id="coinimg" class="px" width="14" height="14" alt=""><span id="gold">0</span></div></div>
+        <button id="gmQuest" class="gearbtn qbtn" type="button" aria-label="ภารกิจ"><svg class="gi" viewBox="0 0 24 24" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="2" width="16" height="20" fill="currentColor"/><rect class="h" x="6" y="4" width="12" height="16"/><g fill="currentColor"><rect x="8" y="7" width="8" height="2"/><rect x="8" y="11" width="8" height="2"/><rect x="8" y="15" width="5" height="2"/></g></svg></button>
+        <button id="menubtn" class="gearbtn" type="button" aria-label="ตั้งค่า"><svg class="gi" viewBox="0 0 24 24" shape-rendering="crispEdges" aria-hidden="true"><g fill="currentColor"><rect x="10" y="1" width="4" height="22"/><rect x="1" y="10" width="22" height="4"/><rect x="10" y="1" width="4" height="22" transform="rotate(45 12 12)"/><rect x="10" y="1" width="4" height="22" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="7.5"/></g><circle class="h" cx="12" cy="12" r="3"/></svg></button>
+      </div>
+      <div class="panel" id="mapwrap">
+        <div class="mh"><span id="zname">ฟาร์ม</span><span id="clock">วัน 1 08:00</span></div>
+        <canvas id="minimap" width="144" height="84"></canvas>
+        <div class="mlg"><span><i class="lg me"></i>คุณ</span><span><i class="lg an"></i>สัตว์เลี้ยง</span><span><i class="lg mo"></i>มอนสเตอร์</span><span><i class="lg sh"></i>ร้านค้า</span><span><i class="lg ex"></i>ทางออก</span></div>
+      </div>
     </div>
   </div>
 
-  <canvas id="minimap" width="96" height="56"></canvas>
   <div id="stage"><canvas id="game" width="384" height="224"></canvas><div id="toast"></div></div>
 
   <div id="controls">
@@ -46,6 +61,29 @@
       <button class="abtn" id="b_act" data-tap="act"><img class="px" alt=""><span>E</span></button>
       <button class="abtn" id="b_attack" data-hold="attack"><img class="px" alt=""><i class="cd"></i><span>J</span></button>
     </div>
+  </div>
+</div>
+
+<div id="gmenu" class="modal hidden">
+  <div class="win panel">
+    <div class="wt th"><span class="wti"><svg class="gi" viewBox="0 0 24 24" shape-rendering="crispEdges" aria-hidden="true"><g fill="currentColor"><rect x="10" y="1" width="4" height="22"/><rect x="1" y="10" width="22" height="4"/><rect x="10" y="1" width="4" height="22" transform="rotate(45 12 12)"/><rect x="10" y="1" width="4" height="22" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="7.5"/></g><circle class="h" cx="12" cy="12" r="3"/></svg> ตั้งค่า</span><button class="mini x" id="gmClose" type="button">X</button></div>
+    <div class="gmbody">
+      <div class="gcol">
+        <div class="who"><canvas id="gmFace" class="px" width="32" height="32"></canvas><div class="wi th" id="gmWho"></div></div>
+        <div class="sec th">เกม</div>
+        <div class="grid2"><button class="mini" id="gmTitles" type="button">ฉายา</button><button class="mini" id="gmHow" type="button">วิธีเล่น</button></div>
+      </div>
+      <div class="gcol">
+        <div class="sec th">ตั้งค่า</div>
+        <button class="tg" id="mutebtn" type="button" data-on="1"><span>เสียง</span><b>เปิด</b></button>
+        <button class="tg" id="padbtn" type="button" data-on="1"><span>ปุ่มจอย</span><b>แสดง</b></button>
+        <div class="sec th">บันทึก</div>
+        <div class="grid2"><button class="mini" id="gmSave" type="button">บันทึกเกม</button><button class="mini warn" id="gmExit" type="button">หน้าเลือกเซฟ</button></div>
+      </div>
+    </div>
+    <div class="how th" id="gmHowBox" hidden></div>
+    <button class="mini go" id="gmResume" type="button">เล่นต่อ</button>
+    <div class="hint th">บันทึกอัตโนมัติก่อนออก · ESC หรือแตะพื้นที่ว่างเพื่อเล่นต่อ</div>
   </div>
 </div>
 
@@ -117,5 +155,8 @@
 <script src="js/auto_q.js"></script>
 <script src="js/art_title.js"></script>
 <script src="js/music.js"></script>
+<script src="js/flow.js"></script>
+<script src="js/ux3.js"></script>
+<script src="js/ux4.js"></script>
 </body>
 </html>
