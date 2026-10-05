@@ -1,0 +1,9 @@
+{
+  "appId": "com.pixelvale.th",
+  "appName": "ป่าสวนบ่าวค๊อป",
+  "webDir": "www",
+  "backgroundColor": "#14151a",
+  "android": {
+    "allowMixedContent": false
+  }
+}

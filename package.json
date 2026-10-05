@@ -1,0 +1,17 @@
+{
+  "name": "pixel-vale-th",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ป่าสวนบ่าวค๊อป — RPG และฟาร์ม (Pixel Vale TH) แพ็กเป็น Android APK ด้วย Capacitor",
+  "scripts": {
+    "serve": "npx --yes http-server www -p 8080 -c-1"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/core": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
+  }
+}
